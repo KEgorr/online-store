@@ -4,7 +4,128 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Store Example</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet" />
   </head>
-  <body></body>
+  <body>
+    <header class="header">
+      <div class="wrapper">
+        <a class="logo" href="#">
+          <div class="logo-img"></div>
+          <h1>Online Store</h1>
+        </a>
+        <div class="shopping-cart">
+          <span class="shopping-cart__img"></span>
+          <span class="shopping-cart__items">0</span>
+        </div>
+      </div>
+    </header>
+    <main class="main">
+      <div class="wrapper">
+        <section class="filters-section">
+          <div class="filter-block other-filters">
+            <div class="search-filter">
+              <h2 class="filters-name">Search</h2>
+              <input class="search" placeholder="Type the text" type="text" autocomplete="off" />
+            </div>
+            <div class="sort-filters">
+              <h2 class="filters-name">Sorting</h2>
+              <div class="sort-value">
+                <p class="sort-name">Sort options:</p>
+                <span class="vertical-line"></span>
+                <span class="sort-checkmark"></span>
+              </div>
+            </div>
+          </div>
+          <div class="filter-block value-filters">
+            <h2 class="filters-name">Filters by value</h2>
+            <div class="filter brand-filter">
+              <p class="filter-category">Brand</p>
+              <div class="filter-values-block"></div>
+            </div>
+            <div class="filter category-filter">
+              <p class="filter-category">Category</p>
+              <div class="filter-values-block"></div>
+            </div>
+          </div>
+          <div class="filter-block range-filters">
+            <h2 class="filters-name">Filters by range</h2>
+            <div class="diapason-filter">
+              <p class="filter-category">Stock</p>
+              <div class="filter-by-range">
+                <div class="double-range-values">
+                  <span class="range-value" id="storage-value1"> 1 </span>
+                  <span>-</span>
+                  <span class="range-value" id="storage-value2"> 12 </span>
+                </div>
+                <div class="double-range-filter">
+                  <div class="slider-track" id="slider-track-storage"></div>
+                  <input type="range" min="1" max="12" value="1" id="slider-storage1" oninput="slideOne()" />
+                  <input type="range" min="1" max="12" value="12" id="slider-storage2" oninput="slideTwo()" />
+                </div>
+              </div>
+            </div>
+            <div class="diapason-filter">
+              <p class="filter-category">Price</p>
+              <div class="filter-by-range">
+                <div class="double-range-values">
+                  <span class="range-value" id="date-value1"> 2000 </span>
+                  <span>-</span>
+                  <span class="range-value" id="date-value2"> 2022 </span>
+                </div>
+                <div class="double-range-filter">
+                  <div class="slider-track" id="slider-track-date"></div>
+                  <input type="range" min="2000" max="2022" value="2000" id="slider-date1" oninput="slideOne()" />
+                  <input type="range" min="2000" max="2022" value="2022" id="slider-date2" oninput="slideTwo()" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="filter-block reset-copy">
+            <div class="reset-button">
+              <button class="default-button">Reset filters</button>
+            </div>
+            <div class="copy-button">
+              <button class="default-button">Copy link</button>
+            </div>
+          </div>
+        </section>
+        <section class="items-section"></section>
+      </div>
+    </main>
+    <footer></footer>
+
+    <template id="itemTemp">
+      <div class="item">
+        <p class="item__name"></p>
+        <span class="item__img"></span>
+        <span class="item__discount"></span>
+        <ul class="characteristics">
+          <li class="char-name">Stock: <span class="characteristics__stock"></span></li>
+          <li class="char-name">Brand: <span class="characteristics__brand"></span></li>
+          <li class="char-name">Category: <span class="characteristics__category"></span></li>
+          <li class="char-name">Rating: <span class="characteristics__rating"></span></li>
+        </ul>
+        <div class="price">
+          <p class="price__current-price"></p>
+          <span class="price__original-price"></span>
+        </div>
+        <div class="item-buttons">
+          <div class="add-to-cart-button">
+            <button class="default-button">Add to cart</button>
+          </div>
+          <div class="details-button">
+            <button class="default-button">Details</button>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <template id="filiterValueTemp">
+      <label class="filter-label">
+        <input class="checkbox" type="checkbox" name="brand" value="samsung" />
+        <p class="fileter_value"></p>
+      </label>
+    </template>
+  </body>
 </html>
