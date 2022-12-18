@@ -1,14 +1,14 @@
-import { itemsData } from '../types/dataTypes';
+import { IStorageData } from '../types/dataTypes';
 
 export class Items {
-  drawItems(data: itemsData[]): void {
+  drawItems(data: IStorageData[]): void {
     const items = this.filterItems(data);
 
     const fragment = document.createDocumentFragment();
     const itemTemp: HTMLTemplateElement | null = document.querySelector('#itemTemp');
 
     if (itemTemp) {
-      items.forEach((item: itemsData) => {
+      items.forEach((item: IStorageData) => {
         const itemClone = itemTemp.content.cloneNode(true);
 
         if (itemClone instanceof DocumentFragment) {
@@ -56,7 +56,7 @@ export class Items {
     }
   }
 
-  filterItems(data: itemsData[]): itemsData[] {
+  filterItems(data: IStorageData[]): IStorageData[] {
     const params = window.location.search;
 
     if (params) {

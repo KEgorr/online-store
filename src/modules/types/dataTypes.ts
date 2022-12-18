@@ -1,4 +1,4 @@
-export interface itemsData {
+export interface IStorageData {
   id: number;
   title: string;
   description: string;

@@ -1,13 +1,13 @@
-import { itemsData, FiletsCategory } from '../types/dataTypes';
+import { IStorageData, FiletsCategory } from '../types/dataTypes';
 
 export class Filters {
-  drawFilters(data: itemsData[], filterCategory: FiletsCategory): void {
+  drawFilters(data: IStorageData[], filterCategory: FiletsCategory): void {
     const fragment = document.createDocumentFragment();
     const filterTemp: HTMLTemplateElement | null = document.querySelector('#filterValueTemp');
     const categoryValueArr: string[] = [];
 
     if (filterTemp) {
-      data.forEach((item: itemsData) => {
+      data.forEach((item: IStorageData) => {
         const filterClone = filterTemp.content.cloneNode(true);
 
         if (filterClone instanceof DocumentFragment) {
