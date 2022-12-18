@@ -11,3 +11,8 @@ export interface itemsData {
   thumbnail: string;
   images: string[];
 }
+
+export enum FiletsCategory {
+  Brand = 'brand',
+  Category = 'category',
+}
