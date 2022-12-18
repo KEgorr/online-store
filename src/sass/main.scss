@@ -1,0 +1,21 @@
+@import '../../node_modules/normalize.css/normalize.css';
+
+@import '../sass/abstracts/colors';
+
+@import '../sass/base/base';
+
+@import '../sass/layout/wrapper';
+
+@import '../sass/layout/_store-layout';
+
+@import '../sass/layout/filters-layout';
+
+@import '../sass/components/header';
+
+@import '../sass/components/filters';
+
+@import '../sass/components/buttons';
+
+@import '../sass/components/double-range-slider';
+
+@import '../sass/components/items';
