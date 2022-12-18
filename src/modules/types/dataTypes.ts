@@ -16,3 +16,8 @@ export enum FiletsCategory {
   Brand = 'brand',
   Category = 'category',
 }
+
+export enum FiletsCategoryRange {
+  Stock = 'stock',
+  Price = 'price',
+}

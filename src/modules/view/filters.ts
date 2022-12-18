@@ -1,4 +1,4 @@
-import { IStorageData, FiletsCategory } from '../types/dataTypes';
+import { IStorageData, FiletsCategory, FiletsCategoryRange } from '../types/dataTypes';
 
 export class Filters {
   drawFilters(data: IStorageData[], filterCategory: FiletsCategory): void {
@@ -31,6 +31,31 @@ export class Filters {
     if (filtersBlock) {
       filtersBlock.innerHTML = '';
       filtersBlock.appendChild(fragment);
+    }
+  }
+
+  drawRangeFilters(data: IStorageData[], filterName: FiletsCategoryRange): void {
+    const rangeFilterFirst: HTMLInputElement | null = document.querySelector(`#slider-${filterName}1`);
+    const rangeFilterSecond: HTMLInputElement | null = document.querySelector(`#slider-${filterName}2`);
+
+    const rangeFilterFirstValue: HTMLSpanElement | null = document.querySelector(`#${filterName}-value1`);
+    const rangeFilterSecondValue: HTMLSpanElement | null = document.querySelector(`#${filterName}-value2`);
+
+    const valueArr = data.map((val) => val[filterName]);
+
+    const maxValue = Math.max(...valueArr);
+    const minValue = Math.min(...valueArr);
+
+    if (rangeFilterFirstValue && rangeFilterSecondValue && rangeFilterFirst && rangeFilterSecond) {
+      rangeFilterFirstValue.textContent = `${minValue}`;
+      rangeFilterFirst.min = `${minValue}`;
+      rangeFilterFirst.max = `${maxValue}`;
+      rangeFilterFirst.value = `${minValue}`;
+
+      rangeFilterSecondValue.textContent = `${maxValue}`;
+      rangeFilterSecond.min = `${minValue}`;
+      rangeFilterSecond.max = `${maxValue}`;
+      rangeFilterSecond.value = `${maxValue}`;
     }
   }
 }
