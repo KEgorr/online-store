@@ -41,21 +41,57 @@ export class Filters {
     const rangeFilterFirstValue: HTMLSpanElement | null = document.querySelector(`#${filterName}-value1`);
     const rangeFilterSecondValue: HTMLSpanElement | null = document.querySelector(`#${filterName}-value2`);
 
+    const rangeFilter: HTMLDivElement | null = document.querySelector(`#slider-track-${filterName}`);
     const valueArr = data.map((val) => val[filterName]);
 
     const maxValue = Math.max(...valueArr);
     const minValue = Math.min(...valueArr);
+
+    const minGap = 0;
 
     if (rangeFilterFirstValue && rangeFilterSecondValue && rangeFilterFirst && rangeFilterSecond) {
       rangeFilterFirstValue.textContent = `${minValue}`;
       rangeFilterFirst.min = `${minValue}`;
       rangeFilterFirst.max = `${maxValue}`;
       rangeFilterFirst.value = `${minValue}`;
+      rangeFilterFirst.addEventListener('input', sliderFirstChangeState);
 
       rangeFilterSecondValue.textContent = `${maxValue}`;
       rangeFilterSecond.min = `${minValue}`;
       rangeFilterSecond.max = `${maxValue}`;
       rangeFilterSecond.value = `${maxValue}`;
+      rangeFilterSecond.addEventListener('input', sliderSecondChangeState);
+
+      fillColor();
+    }
+
+    function sliderFirstChangeState() {
+      if (rangeFilterFirstValue && rangeFilterFirst && rangeFilterSecond) {
+        if (parseInt(rangeFilterSecond.value) - parseInt(rangeFilterFirst.value) <= minGap) {
+          rangeFilterFirst.value = `${parseInt(rangeFilterSecond.value) - minGap}`;
+        }
+        rangeFilterFirstValue.textContent = rangeFilterFirst.value;
+
+        fillColor();
+      }
+    }
+    function sliderSecondChangeState() {
+      if (rangeFilterSecondValue && rangeFilterFirst && rangeFilterSecond) {
+        if (parseInt(rangeFilterSecond.value) - parseInt(rangeFilterFirst.value) <= minGap) {
+          rangeFilterSecond.value = `${parseInt(rangeFilterFirst.value) + minGap}`;
+        }
+        rangeFilterSecondValue.textContent = rangeFilterSecond.value;
+
+        fillColor();
+      }
+    }
+    function fillColor() {
+      if (rangeFilterFirst && rangeFilterSecond && rangeFilter) {
+        const percentFirstSlider = (parseInt(rangeFilterFirst.value) / maxValue) * 100;
+        const percentSecondSlider = (parseInt(rangeFilterSecond.value) / maxValue) * 100;
+
+        rangeFilter.style.background = `linear-gradient(to right, #dadae5 ${percentFirstSlider}% , #3264fe ${percentFirstSlider}% , #3264fe ${percentSecondSlider}%, #dadae5 ${percentSecondSlider}%)`;
+      }
     }
   }
 }
