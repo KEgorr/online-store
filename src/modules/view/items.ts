@@ -61,6 +61,23 @@ export class Items {
 
     if (params) {
       // TODO filters by different values
+      // const params = location.search;
+      // const param = new URLSearchParams(params);
+      // const arrParams = Array.from(param.entries());
+      // arrParams.forEach((arr) => {
+      //   data.forEach((item: IStorageData) => {
+      //     console.log(item);
+      //   });
+      //   console.log(arr);
+      // });
+      // const result = params
+      //   .slice(params.indexOf('?') + 1)
+      //   .split('&')
+      //   .reduce((param, hash) => {
+      //     const [key, val] = hash.split('=');
+      //     return Object.assign(param, { [key]: decodeURIComponent(val) });
+      //   }, {});
+      // console.log(result);
     }
     return data;
   }
