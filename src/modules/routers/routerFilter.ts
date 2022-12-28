@@ -22,7 +22,10 @@ export class AddQueryParams {
   private setAttribute(name: string, val: string) {
     const url = new URL((window.location as unknown) as string);
     url.searchParams.set(name, val);
-    history.pushState('', '', url.toString().replace(/%(?:2C|60|5E|2520|27|26)/g, unescape));
+    if (val === '') {
+      url.searchParams.delete(name);
+    }
+    history.pushState('', '', url.toString().replace(/%(?:2C|60|5E|27|26)/g, '↕'));
   }
 
   public add() {
@@ -35,7 +38,7 @@ export class AddQueryParams {
 
     if (checkboxes) {
       checkboxes.forEach((checkbox) => {
-        checkbox.addEventListener('change', (event) => {
+        checkbox.addEventListener('input', (event) => {
           const targetCheckbox = event.currentTarget as HTMLInputElement;
           const paramsQuery: { [key: string]: string[] } = {};
           const target = event.target as HTMLInputElement;
@@ -66,7 +69,6 @@ export class AddQueryParams {
                 const resultGetLocal: string = getLocal.replace(new RegExp(targetValue, 'g'), '');
                 localStorage.set(target.name, resultGetLocal);
               }
-
               if (paramsCategoryValue.length === 0) {
                 localStorage.clear('category');
               }
@@ -75,6 +77,7 @@ export class AddQueryParams {
               }
             }
           }
+
           this.setAttribute(this.createQueryParamsKey(paramsQuery), this.createQueryParams(paramsQuery));
         });
       });
@@ -85,29 +88,33 @@ export class AddQueryParams {
     const price1: HTMLInputElement | null = document.querySelector(`#slider-price1`);
     const price2: HTMLInputElement | null = document.querySelector(`#slider-price2`);
 
+    const sliders = [stoke1, stoke2, price1, price2];
+
     if (stoke1 && stoke2 && price1 && price2) {
-      addEventListener('input', (event) => {
-        const paramsQuery: { [key: string]: string[] } = {};
-        const target = event.target as HTMLInputElement;
-        const stoke1Value: string = stoke1.value;
-        const stoke2Value: string = stoke2.value;
-        const arrStockValue = [stoke1Value, stoke2Value];
-        const price1Value: string = price1.value;
-        const price2Value: string = price2.value;
-        const arrPriceValue = [price1Value, price2Value];
+      sliders.forEach((el) => {
+        el?.addEventListener('input', (event) => {
+          const paramsQuery: { [key: string]: string[] } = {};
+          const target = event.target as HTMLInputElement;
+          const stoke1Value: string = stoke1.value;
+          const stoke2Value: string = stoke2.value;
+          const arrStockValue = [stoke1Value, stoke2Value];
+          const price1Value: string = price1.value;
+          const price2Value: string = price2.value;
+          const arrPriceValue = [price1Value, price2Value];
 
-        if (target.type === 'range') {
-          if (target.id === 'slider-price1') {
-            paramsQuery['price'] = arrPriceValue;
-            localStorage.set('price', arrPriceValue.toString());
-          } else {
-            paramsQuery['stock'] = arrStockValue;
-            localStorage.set('stock', arrStockValue.toString());
+          if (target.type === 'range') {
+            if (target.id.indexOf('slider-price') !== -1) {
+              paramsQuery['price'] = arrPriceValue;
+              localStorage.set('price', arrPriceValue.toString());
+            } else {
+              paramsQuery['stock'] = arrStockValue;
+              localStorage.set('stock', arrStockValue.toString());
+            }
           }
-        }
-
-        this.setAttribute(this.createQueryParamsKey(paramsQuery), this.createQueryParams(paramsQuery));
+          this.setAttribute(this.createQueryParamsKey(paramsQuery), this.createQueryParams(paramsQuery));
+        });
       });
+      // addEventListener('input[type=range]', (event) => {});
       // const getLS = localStorage.get('price');
       // if (getLS) {
       //   const arrGetLS = getLS.split(',');
@@ -135,7 +142,8 @@ export class AddQueryParams {
 
     if (buttonDefault) {
       buttonDefault.onclick = function () {
-        window.location.replace(window.location.pathname);
+        const url = new URL(window.location.origin);
+        history.pushState('', '', url.toString());
         localStorage.clearAll();
       };
     }
