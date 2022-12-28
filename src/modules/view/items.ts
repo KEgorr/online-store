@@ -57,7 +57,7 @@ export class Items {
   }
 
   filterItems(data: IStorageData[]): IStorageData[] {
-    const params = window.location.search;
+    const params = new URLSearchParams(window.location.search);
 
     if (params) {
       // TODO filters by different values
@@ -78,6 +78,42 @@ export class Items {
       //     return Object.assign(param, { [key]: decodeURIComponent(val) });
       //   }, {});
       // console.log(result);
+      // const paramsObj = Object.fromEntries(Array.from(params.entries()).map(([key, value]) => [key, value]));
+      // arrPrams.forEach((val) => {
+      //   const [key, value] = val;
+      //   Object.assign(params, { [key]: value });
+      // });
+      // console.log(paramsObj);
+
+      const paramsArr = Array.from(params.entries());
+      paramsArr.forEach(([key, value]) => {
+        let validValues = value.split('↕');
+        validValues = validValues.map((val) => decodeURI(val));
+        if (key === 'brand') {
+          data = data.filter((val) => validValues.includes(val.brand));
+        } else if (key === 'category') {
+          data = data.filter((val) => validValues.includes(val.category));
+        } else if (key === 'stock') {
+          data = data.filter((val) => val.stock >= parseInt(validValues[0]) && val.stock <= parseInt(validValues[1]));
+        } else if (key === 'price') {
+          data = data.filter((val) => val.price >= parseInt(validValues[0]) && val.price <= parseInt(validValues[1]));
+        } else if (key === 'search') {
+          data = data.filter((val) => {
+            const valArr = Object.entries(val);
+            for ([key, value] of valArr) {
+              if (key !== 'id' && key !== 'images' && key !== 'thumbnail') {
+                if (typeof value === 'string' || typeof value === 'number') {
+                  const strValue = value.toString().toLowerCase();
+                  const validSearch = validValues[0].toLowerCase();
+                  if (strValue.indexOf(validSearch) !== -1) {
+                    return true;
+                  }
+                }
+              }
+            }
+          });
+        }
+      });
     }
     return data;
   }
