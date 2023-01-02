@@ -9,8 +9,8 @@ export class AddQueryParams {
 
   private createQueryParams(params: { [key: string]: string[] }): string {
     return Object.keys(params)
-      .map((key) => `${encodeURI((params[key] as unknown) as string)}`)
-      .join('&');
+      .map((key) => params[key].map((val) => encodeURI(val)).join('↕'))
+      .join('');
   }
 
   private createQueryParamsKey(params: { [key: string]: string[] }): string {
@@ -25,7 +25,7 @@ export class AddQueryParams {
     if (val === '') {
       url.searchParams.delete(name);
     }
-    history.pushState('', '', url.toString().replace(/%(?:2C|60|5E|27|26)/g, '↕'));
+    history.pushState('', '', url.toString());
   }
 
   public add() {
