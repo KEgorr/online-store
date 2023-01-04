@@ -62,7 +62,7 @@ export class Filters {
       rangeFilterSecond.max = `${maxValue}`;
       rangeFilterSecond.value = `${maxValue}`;
       rangeFilterSecond.addEventListener('input', sliderSecondChangeState);
-      rangeFilterFirst.addEventListener('change', sliderFirstChangeState);
+      rangeFilterSecond.addEventListener('change', sliderSecondChangeState);
 
       fillColor();
     }
