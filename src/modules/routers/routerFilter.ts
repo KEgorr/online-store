@@ -22,7 +22,7 @@ export class AddQueryParams {
   private setAttribute(name: string, val: string) {
     const url = new URL((window.location as unknown) as string);
     url.searchParams.set(name, val);
-    if (val === '') {
+    if (url.searchParams.get(name) === '') {
       url.searchParams.delete(name);
     }
     history.pushState('', '', url.toString());
@@ -39,13 +39,23 @@ export class AddQueryParams {
     if (checkboxes) {
       checkboxes.forEach((checkbox) => {
         checkbox.addEventListener('input', (event) => {
+          const params = new URLSearchParams(window.location.search);
+
+          const paramsCurBrand = params.get('brand')?.split('↕');
+          const paramsCurCategory = params.get('category')?.split('↕');
+
+          if (paramsCurBrand) {
+            paramsBrandValue = paramsCurBrand;
+          }
+          if (paramsCurCategory) {
+            paramsCategoryValue = paramsCurCategory;
+          }
           const targetCheckbox = event.currentTarget as HTMLInputElement;
           const paramsQuery: { [key: string]: string[] } = {};
           const target = event.target as HTMLInputElement;
           const targetName: string = target.name;
           const targetValue: string = target.value;
           const getLocal: string | null = localStorage.get(target.name);
-
           if (targetCheckbox.checked) {
             if (target.name === 'brand') {
               paramsBrandValue.push(targetValue);
@@ -77,7 +87,6 @@ export class AddQueryParams {
               }
             }
           }
-
           this.setAttribute(this.createQueryParamsKey(paramsQuery), this.createQueryParams(paramsQuery));
         });
       });
