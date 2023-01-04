@@ -45,10 +45,10 @@ export class AddQueryParams {
           const paramsCurCategory = params.get('category')?.split('↕');
 
           if (paramsCurBrand) {
-            paramsBrandValue = paramsCurBrand;
+            paramsBrandValue = paramsCurBrand.map((val) => decodeURI(val));
           }
           if (paramsCurCategory) {
-            paramsCategoryValue = paramsCurCategory;
+            paramsCategoryValue = paramsCurCategory.map((val) => decodeURI(val));
           }
           const targetCheckbox = event.currentTarget as HTMLInputElement;
           const paramsQuery: { [key: string]: string[] } = {};
