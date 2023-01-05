@@ -55,12 +55,14 @@ export class Filters {
       rangeFilterFirst.max = `${maxValue}`;
       rangeFilterFirst.value = `${minValue}`;
       rangeFilterFirst.addEventListener('input', sliderFirstChangeState);
+      rangeFilterFirst.addEventListener('change', sliderFirstChangeState);
 
       rangeFilterSecondValue.textContent = `${maxValue}`;
       rangeFilterSecond.min = `${minValue}`;
       rangeFilterSecond.max = `${maxValue}`;
       rangeFilterSecond.value = `${maxValue}`;
       rangeFilterSecond.addEventListener('input', sliderSecondChangeState);
+      rangeFilterSecond.addEventListener('change', sliderSecondChangeState);
 
       fillColor();
     }
@@ -93,5 +95,62 @@ export class Filters {
         rangeFilter.style.background = `linear-gradient(to right, #dadae5 ${percentFirstSlider}% , #3264fe ${percentFirstSlider}% , #3264fe ${percentSecondSlider}%, #dadae5 ${percentSecondSlider}%)`;
       }
     }
+  }
+
+  filtersChangeState() {
+    const params = new URLSearchParams(window.location.search);
+
+    const paramsArr = Array.from(params.entries());
+    const checkBoxes = document.querySelectorAll('.checkbox');
+    if (checkBoxes) {
+      checkBoxes.forEach((el) => {
+        if (el instanceof HTMLInputElement) {
+          el.checked = false;
+        }
+      });
+    }
+
+    const searchInput = document.querySelector('.search');
+    if (searchInput instanceof HTMLInputElement) {
+      searchInput.value = '';
+    }
+
+    paramsArr.forEach(([key, val]) => {
+      let validValues = val.split('↕');
+      validValues = validValues.map((val) => decodeURI(val));
+      if (key === 'search') {
+        if (searchInput instanceof HTMLInputElement) {
+          searchInput.value = validValues[0];
+        }
+      } else if (key === 'brand' || key === 'category') {
+        checkBoxes.forEach((el) => {
+          if (el instanceof HTMLInputElement) {
+            if (validValues.includes(el.value)) {
+              el.checked = true;
+            }
+          }
+        });
+      } else if (key === 'stock') {
+        const stockSlider1 = document.querySelector('#slider-stock1');
+        const stockSlider2 = document.querySelector('#slider-stock2');
+        if (stockSlider1 instanceof HTMLInputElement && stockSlider2 instanceof HTMLInputElement) {
+          stockSlider1.value = validValues[0];
+          stockSlider2.value = validValues[1];
+          const event = new Event('change');
+          stockSlider1.dispatchEvent(event);
+          stockSlider2.dispatchEvent(event);
+        }
+      } else if (key === 'price') {
+        const priceSlider1 = document.querySelector('#slider-price1');
+        const priceSlider2 = document.querySelector('#slider-price2');
+        if (priceSlider1 instanceof HTMLInputElement && priceSlider2 instanceof HTMLInputElement) {
+          priceSlider1.value = validValues[0];
+          priceSlider2.value = validValues[1];
+          const event = new Event('change');
+          priceSlider1.dispatchEvent(event);
+          priceSlider2.dispatchEvent(event);
+        }
+      }
+    });
   }
 }
