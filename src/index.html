@@ -126,5 +126,49 @@
         <p class="filter_value"></p>
       </label>
     </template>
+
+    <template id="itemPage">
+      <section class="item-page">
+        <div class="item-path">
+          <P class="item-path__text">STORE</P>
+          <span class="slash">/</span>
+          <P class="item-path__text item-path__text_category"></P>
+          <span class="slash">/</span>
+          <P class="item-path__text item-path__text_brand"></P>
+          <span class="slash">/</span>
+          <P class="item-path__text item-path__text_tittle"></P>
+        </div>
+        <div class="item-info">
+          <p class="item-info__name"></p>
+          <div class="overview">
+            <div class="images">
+              <div class="side-images"></div>
+              <div class="main-image"><span class="item__discount item__discount_info"></span></div>
+            </div>
+            <div class="info-main">
+              <ul class="characteristics">
+                <li class="char-name">Description: <span class="char-value characteristics__description"></span></li>
+                <li class="char-name">Stock: <span class="char-value characteristics__stock"></span></li>
+                <li class="char-name">Brand: <span class="char-value characteristics__brand"></span></li>
+                <li class="char-name">Category: <span class="char-value characteristics__category"></span></li>
+                <li class="char-name">Rating: <span class="char-value characteristics__rating"></span></li>
+              </ul>
+              <div class="price">
+                <p class="price__current-price"></p>
+                <span class="price__original-price"></span>
+              </div>
+              <div class="item-buttons">
+                <div class="add-to-cart-button">
+                  <button class="default-button">Add to cart</button>
+                </div>
+                <div class="by-now-button">
+                  <button class="default-button">Buy now</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </template>
   </body>
 </html>

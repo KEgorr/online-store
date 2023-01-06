@@ -43,6 +43,7 @@ export class Items {
             curPrice.textContent = `${item.price}$`;
             origPrice.textContent = `${(item.price / (1 - item.discountPercentage / 100)).toFixed(0)}$`;
 
+            itemClone.querySelector('.item')?.setAttribute('id', `${item.id}`);
             fragment.append(itemClone);
           }
         }
