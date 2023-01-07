@@ -10,7 +10,7 @@
   <body>
     <header class="header">
       <div class="wrapper">
-        <a class="logo" href="#">
+        <a class="logo" href="/">
           <div class="logo-img"></div>
           <h1 class="logo__name">Online Store</h1>
         </a>
@@ -169,6 +169,78 @@
           </div>
         </div>
       </section>
+    </template>
+
+    <template id="mainPage">
+      <section class="filters-section">
+        <div class="filter-block other-filters">
+          <div class="search-filter">
+            <h2 class="filters-name">Search</h2>
+            <input class="search" placeholder="Type the text" type="text" autocomplete="off" />
+          </div>
+          <div class="sort-filters">
+            <h2 class="filters-name">Sorting</h2>
+            <div class="sort-value">
+              <p class="sort-name">Sort options:</p>
+              <span class="vertical-line"></span>
+              <span class="sort-checkmark"></span>
+            </div>
+          </div>
+        </div>
+        <div class="filter-block value-filters">
+          <h2 class="filters-name">Filters by value</h2>
+          <div class="filter brand-filter">
+            <p class="filter-category">Brand</p>
+            <div class="filter-values-block brand"></div>
+          </div>
+          <div class="filter category-filter">
+            <p class="filter-category">Category</p>
+            <div class="filter-values-block category"></div>
+          </div>
+        </div>
+        <div class="filter-block range-filters">
+          <h2 class="filters-name">Filters by range</h2>
+          <div class="diapason-filter">
+            <p class="filter-category">Stock</p>
+            <div class="filter-by-range">
+              <div class="double-range-values">
+                <span class="range-value" id="stock-value1"> # </span>
+                <span>-</span>
+                <span class="range-value" id="stock-value2"> # </span>
+              </div>
+              <div class="double-range-filter">
+                <div class="slider-track" id="slider-track-stock"></div>
+                <input type="range" min="" max="" value="" id="slider-stock1" />
+                <input type="range" min="" max="" value="" id="slider-stock2" />
+              </div>
+            </div>
+          </div>
+          <div class="diapason-filter">
+            <p class="filter-category">Price, $</p>
+            <div class="filter-by-range">
+              <div class="double-range-values">
+                <span class="range-value" id="price-value1"> # </span>
+                <span>-</span>
+                <span class="range-value" id="price-value2"> # </span>
+              </div>
+              <div class="double-range-filter">
+                <div class="slider-track" id="slider-track-price"></div>
+                <input type="range" min="" max="" value="" id="slider-price1" />
+                <input type="range" min="" max="" value="" id="slider-price2" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="filter-block reset-copy">
+          <div class="reset-button">
+            <button class="default-button">Reset filters</button>
+          </div>
+          <div class="copy-button">
+            <button class="default-button">Copy link</button>
+          </div>
+        </div>
+      </section>
+      <section class="items-section"></section>
     </template>
   </body>
 </html>

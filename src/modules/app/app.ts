@@ -22,32 +22,33 @@ export class App {
   }
 
   public start() {
-    this.filters.drawFilters(data.products, FiletsCategory.Brand);
-    this.filters.drawFilters(data.products, FiletsCategory.Category);
-    this.filters.drawRangeFilters(data.products, FiletsCategoryRange.Price);
-    this.filters.drawRangeFilters(data.products, FiletsCategoryRange.Stock);
-    this.routerFilter.add();
+    // this.filters.drawFilters(data.products, FiletsCategory.Brand);
+    // this.filters.drawFilters(data.products, FiletsCategory.Category);
+    // this.filters.drawRangeFilters(data.products, FiletsCategoryRange.Price);
+    // this.filters.drawRangeFilters(data.products, FiletsCategoryRange.Stock);
+    // this.routerFilter.add();
 
     this.pageRouter.routerSetup(data.products);
 
     this.pageRouter.setupPageHooks();
 
-    document
-      .querySelectorAll('input')
-      .forEach((el) => el.addEventListener('input', () => this.items.drawItems(data.products)));
-    document.querySelector('.reset-button')?.addEventListener('click', () => {
-      this.start();
-    });
+    // document
+    //   .querySelectorAll('input')
+    //   .forEach((el) => el.addEventListener('input', () => this.items.drawItems(data.products)));
+    // document.querySelector('.reset-button')?.addEventListener('click', () => {
+    //   this.items.drawItems(data.products);
+    //   this.filters.filtersChangeState();
+    // });
 
     window.addEventListener('popstate', () => {
-      this.items.drawItems(data.products);
-      this.filters.filtersChangeState();
+      // this.items.drawItems(data.products);
+      // this.filters.filtersChangeState();
       this.pageRouter.check();
     });
 
     window.addEventListener('DOMContentLoaded', () => {
-      this.items.drawItems(data.products);
-      this.filters.filtersChangeState();
+      // this.items.drawItems(data.products);
+      // this.filters.filtersChangeState();
       this.pageRouter.check();
     });
   }
