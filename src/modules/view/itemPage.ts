@@ -1,3 +1,4 @@
+import { app } from '../..';
 import { IStorageData } from '../types/dataTypes';
 
 export class ItemPage {
@@ -67,6 +68,12 @@ export class ItemPage {
             main.innerHTML = '';
             main.appendChild(fragment);
           }
+          itemCategoryPath.addEventListener('click', () => {
+            app.pageRouter.navigateTo(`?category=${item.category}`);
+          });
+          itemBrandPath.addEventListener('click', () =>
+            app.pageRouter.navigateTo(`?category=${encodeURI(item.category)}&brand=${encodeURI(item.brand)}`)
+          );
         }
       }
     }

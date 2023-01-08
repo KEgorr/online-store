@@ -2,7 +2,7 @@ import * as data from '../data/store-items.json';
 import { PageRouter } from '../routers/vanillaRouter';
 
 export class App {
-  private pageRouter: PageRouter;
+  public pageRouter: PageRouter;
 
   constructor() {
     this.pageRouter = new PageRouter({
