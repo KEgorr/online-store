@@ -17,6 +17,8 @@ export class App {
     this.pageRouter.setupPageHooks();
     this.pageRouter.addUriListener();
     this.pageRouter.addDOMContentLoadedListener();
+
+    document.querySelector('.logo')?.addEventListener('click', () => this.pageRouter.navigateTo('/'));
   }
 }
 

@@ -24,6 +24,7 @@ export class ItemPage {
         const rating: HTMLLIElement | null = pageClone.querySelector('.characteristics__rating');
         const curPrice: HTMLParagraphElement | null = pageClone.querySelector('.price__current-price');
         const origPrice: HTMLSpanElement | null = pageClone.querySelector('.price__original-price');
+        const storeLink: HTMLParagraphElement | null = pageClone.querySelector('.item-path__text_store');
 
         if (
           itemCategoryPath &&
@@ -39,7 +40,8 @@ export class ItemPage {
           category &&
           rating &&
           curPrice &&
-          origPrice
+          origPrice &&
+          storeLink
         ) {
           itemCategoryPath.textContent = item.category;
           itemBrandPath.textContent = item.brand;
@@ -75,6 +77,7 @@ export class ItemPage {
           itemBrandPath.addEventListener('click', () =>
             app.pageRouter.navigateTo(`?category=${encodeURI(item.category)}&brand=${encodeURI(item.brand)}`)
           );
+          storeLink.addEventListener('click', () => app.pageRouter.navigateTo('/'));
         }
       }
     }
