@@ -55,6 +55,11 @@ export class Items {
       itemsSection.innerHTML = '';
       itemsSection.appendChild(fragment);
     }
+    const itemsFound: HTMLParagraphElement | null = document.querySelector('.items-found');
+
+    if (itemsFound) {
+      itemsFound.textContent = `Items found: ${items.length}`;
+    }
   }
 
   filterItems(data: IStorageData[]): IStorageData[] {
