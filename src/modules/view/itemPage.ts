@@ -47,6 +47,7 @@ export class ItemPage {
           tittle.textContent = item.title;
           item.images.forEach((img) => {
             const imgItem = document.createElement('p');
+            imgItem.classList.add('side-images__img');
             imgItem.style.backgroundImage = `url(${img})`;
             sideImages.appendChild(imgItem);
           });
