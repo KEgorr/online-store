@@ -1,8 +1,8 @@
-import AddQueryParams from '../routers/routerFilter';
-import { Filters } from './filters';
-import { Items } from './items';
-import * as data from '../data/store-items.json';
-import { FiletsCategory, FiletsCategoryRange } from '../types/dataTypes';
+import AddQueryParams from '../../routers/routerFilter';
+import { Filters } from '../filters';
+import { Items } from '../items';
+import * as data from '../../data/store-items.json';
+import { FiletsCategory, FiletsCategoryRange } from '../../types/dataTypes';
 
 export class MainPage {
   private items: Items;

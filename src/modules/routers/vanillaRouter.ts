@@ -1,7 +1,7 @@
 import Router = require('vanilla-router');
 import { IStorageData } from '../types/dataTypes';
-import { ItemPage } from '../view/itemPage';
-import { MainPage } from '../view/mainPage';
+import { ItemPage } from '../view/pages/itemPage';
+import { MainPage } from '../view/pages/mainPage';
 
 export class PageRouter extends Router {
   private itemPage = new ItemPage();

@@ -1,5 +1,5 @@
-import { app } from '../..';
-import { IStorageData } from '../types/dataTypes';
+import { app } from '../../..';
+import { IStorageData } from '../../types/dataTypes';
 
 export class ItemPage {
   public drawItemPage(item: IStorageData) {
