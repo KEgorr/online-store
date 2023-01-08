@@ -20,7 +20,8 @@ export class MainPage {
     if (pageTemp) {
       const main = document.querySelector('.main .wrapper');
       if (main) {
-        main.appendChild(pageTemp.content);
+        main.innerHTML = '';
+        main.appendChild(pageTemp.content.cloneNode(true));
       }
     }
     this.items.drawItems(data.products);
@@ -28,22 +29,13 @@ export class MainPage {
     this.filters.drawFilters(data.products, FiletsCategory.Category);
     this.filters.drawRangeFilters(data.products, FiletsCategoryRange.Price);
     this.filters.drawRangeFilters(data.products, FiletsCategoryRange.Stock);
+    this.filters.filtersChangeState();
     this.routerFilter.add();
 
     document
       .querySelectorAll('input')
       .forEach((el) => el.addEventListener('input', () => this.items.drawItems(data.products)));
     document.querySelector('.reset-button')?.addEventListener('click', () => {
-      this.items.drawItems(data.products);
-      this.filters.filtersChangeState();
-    });
-
-    window.addEventListener('popstate', () => {
-      this.items.drawItems(data.products);
-      this.filters.filtersChangeState();
-    });
-
-    window.addEventListener('DOMContentLoaded', () => {
       this.items.drawItems(data.products);
       this.filters.filtersChangeState();
     });

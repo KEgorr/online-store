@@ -15,20 +15,24 @@ export class PageRouter extends Router {
   }
 
   public setupPageHooks() {
-    const itemSection = document.querySelector('.items-section');
-    if (itemSection instanceof Element) {
-      itemSection.addEventListener('click', (event: Event) => {
+    const body = document.querySelector('body');
+    if (body instanceof Element) {
+      body.addEventListener('click', (event: Event) => {
         this.navigateToItemPage(event);
       });
     }
   }
 
-  navigateToItemPage(event: Event) {
+  public addDOMContentLoadedListener() {
+    window.addEventListener('DOMContentLoaded', () => this.check());
+  }
+
+  private navigateToItemPage(event: Event) {
     const target = event.target;
 
     if (target instanceof Element) {
       const item = target.closest('.item');
-      if (item instanceof HTMLDivElement) {
+      if (item instanceof HTMLDivElement && item !== null) {
         this.navigateTo(`products/${item.id}`);
       }
     }
