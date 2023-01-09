@@ -11,7 +11,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "normalize.css": "^8.0.1"
+    "normalize.css": "^8.0.1",
+    "vanilla-router": "^1.2.8"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.45.1",

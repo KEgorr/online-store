@@ -115,6 +115,11 @@ export class Filters {
       searchInput.value = '';
     }
 
+    const sortName = document.querySelector('.sort-name');
+    if (sortName) {
+      sortName.textContent = 'Sort Options';
+    }
+
     paramsArr.forEach(([key, val]) => {
       let validValues = val.split('↕');
       validValues = validValues.map((val) => decodeURI(val));
@@ -150,7 +155,30 @@ export class Filters {
           priceSlider1.dispatchEvent(event);
           priceSlider2.dispatchEvent(event);
         }
+      } else if (key === 'sort') {
+        const sortOptions = document.querySelectorAll('.sort-options__name');
+        if (sortName) {
+          sortOptions.forEach((el) => {
+            if (el.getAttribute('value') === validValues[0]) {
+              sortName.textContent = el.textContent;
+            }
+          });
+        }
       }
     });
+  }
+  openSortOptions() {
+    const checkbox: HTMLInputElement | null = document.querySelector('.custom-select__checkbox');
+    const sortOptions: HTMLDivElement | null = document.querySelector('.sort-options');
+    const sortCheckMark: HTMLSpanElement | null = document.querySelector('.sort-checkmark');
+    if (sortOptions && sortCheckMark) {
+      if (checkbox?.checked) {
+        sortOptions.classList.remove('sort-options_hidden');
+        sortCheckMark.classList.add('sort-checkmark_rotated');
+      } else {
+        sortOptions.classList.add('sort-options_hidden');
+        sortCheckMark.classList.remove('sort-checkmark_rotated');
+      }
+    }
   }
 }

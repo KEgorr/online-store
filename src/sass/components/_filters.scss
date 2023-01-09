@@ -10,15 +10,22 @@
   font-size: 1em;
 }
 
-.sort-value {
+.custom-select {
   background-color: #ffffff;
   border-radius: 10px;
   border: 1px solid $color_border;
   padding: 5px;
   font-size: 1em;
+  .custom-select__checkbox {
+    position: absolute;
+    left: -10000px;
+  }
+}
+
+.sort-value {
   display: flex;
   justify-content: space-around;
-
+  padding-bottom: 3px;
   .sort-name {
     white-space: nowrap;
     width: 80%;
@@ -39,6 +46,36 @@
     background-repeat: no-repeat;
     background-size: contain;
   }
+}
+
+.sort-checkmark_rotated {
+  transform: rotate(-90deg);
+}
+
+.radio-sort {
+  position: absolute;
+  left: -100000px;
+}
+
+.sort-options {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  justify-content: center;
+  height: 170px;
+}
+
+.sort-options__option {
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 5px;
+  &:hover {
+    background-color: $color_border;
+  }
+}
+
+.sort-options_hidden {
+  height: 0;
 }
 
 .filter {
@@ -72,4 +109,10 @@
   border: 1px solid $color_border;
   border-radius: 10px;
   text-align: center;
+}
+
+.items-found {
+  margin: 0.2em auto;
+  font-size: 1.2rem;
+  font-weight: bold;
 }

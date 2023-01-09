@@ -55,7 +55,6 @@ export class AddQueryParams {
           const target = event.target as HTMLInputElement;
           const targetName: string = target.name;
           const targetValue: string = target.value;
-          const getLocal: string | null = localStorage.get(target.name);
           if (targetCheckbox.checked) {
             if (target.name === 'brand') {
               paramsBrandValue.push(targetValue);
@@ -67,24 +66,18 @@ export class AddQueryParams {
               localStorage.set(target.name, JSON.stringify(paramsCategoryValue));
             }
           } else {
-            if (getLocal) {
-              if (target.name === 'brand') {
-                paramsBrandValue = paramsBrandValue.filter((item) => item !== targetValue);
-                paramsQuery[targetName] = paramsBrandValue;
-                const resultGetLocal: string = getLocal.replace(new RegExp(targetValue, 'g'), '');
-                localStorage.set(target.name, resultGetLocal);
-              } else {
-                paramsCategoryValue = paramsCategoryValue.filter((item) => item !== targetValue);
-                paramsQuery[targetName] = paramsCategoryValue;
-                const resultGetLocal: string = getLocal.replace(new RegExp(targetValue, 'g'), '');
-                localStorage.set(target.name, resultGetLocal);
-              }
-              if (paramsCategoryValue.length === 0) {
-                localStorage.clear('category');
-              }
-              if (paramsBrandValue.length === 0) {
-                localStorage.clear('brand');
-              }
+            if (target.name === 'brand') {
+              paramsBrandValue = paramsBrandValue.filter((item) => item !== targetValue);
+              paramsQuery[targetName] = paramsBrandValue;
+            } else {
+              paramsCategoryValue = paramsCategoryValue.filter((item) => item !== targetValue);
+              paramsQuery[targetName] = paramsCategoryValue;
+            }
+            if (paramsCategoryValue.length === 0) {
+              localStorage.clear('category');
+            }
+            if (paramsBrandValue.length === 0) {
+              localStorage.clear('brand');
             }
           }
           this.setAttribute(this.createQueryParamsKey(paramsQuery), this.createQueryParams(paramsQuery));
@@ -123,13 +116,6 @@ export class AddQueryParams {
           this.setAttribute(this.createQueryParamsKey(paramsQuery), this.createQueryParams(paramsQuery));
         });
       });
-      // addEventListener('input[type=range]', (event) => {});
-      // const getLS = localStorage.get('price');
-      // if (getLS) {
-      //   const arrGetLS = getLS.split(',');
-      //   price1.value = arrGetLS[0];
-      //   price2.value = arrGetLS[1];
-      // }
     }
 
     if (search) {
@@ -169,6 +155,26 @@ export class AddQueryParams {
         document.body.removeChild(copyUrl);
       };
     }
+
+    const sortOptions = document.querySelectorAll('.sort-options__name');
+    sortOptions.forEach((el) => {
+      el.addEventListener('click', (event) => {
+        const sortTarget = event.target;
+        if (sortTarget instanceof Element) {
+          const sortValue = sortTarget.getAttribute('value');
+          const paramsQuery: { [key: string]: string[] } = {};
+          if (sortValue) {
+            paramsQuery['sort'] = [sortValue];
+            this.setAttribute('sort', this.createQueryParams(paramsQuery));
+
+            const sortName = document.querySelector('.sort-name');
+            if (sortName) {
+              sortName.textContent = sortTarget.textContent;
+            }
+          }
+        }
+      });
+    });
   }
 }
 
