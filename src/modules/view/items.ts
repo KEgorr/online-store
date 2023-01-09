@@ -51,13 +51,14 @@ export class Items {
               itemCharRating.textContent = `${item.rating}`;
               curPrice.textContent = `${item.price}$`;
               origPrice.textContent = `${(item.price / (1 - item.discountPercentage / 100)).toFixed(0)}$`;
+              addToCartButton.id = `${item.id}`;
 
               const localData = app.localStorage.get('items');
               let localItems: IStorageData[] = [];
               if (localData) {
                 localItems = JSON.parse(localData) as IStorageData[];
               }
-              if (localItems.find((el) => el.title === item.title)) {
+              if (localItems.find((el) => el.id === item.id)) {
                 itemClone.querySelector('.item')?.classList.add('item-in-cart');
                 addToCartButton.textContent = 'Drop from cart';
               }

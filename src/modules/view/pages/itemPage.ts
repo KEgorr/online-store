@@ -1,7 +1,14 @@
 import { app } from '../../..';
 import { IStorageData } from '../../types/dataTypes';
+import { Cost } from '../cost';
 
 export class ItemPage {
+  private costChanging: Cost;
+
+  constructor() {
+    this.costChanging = new Cost();
+  }
+
   public drawItemPage(item: IStorageData) {
     const fragment = document.createDocumentFragment();
     const pageTemp: HTMLTemplateElement | null = document.querySelector('#itemPage');
@@ -25,6 +32,7 @@ export class ItemPage {
         const curPrice: HTMLParagraphElement | null = pageClone.querySelector('.price__current-price');
         const origPrice: HTMLSpanElement | null = pageClone.querySelector('.price__original-price');
         const storeLink: HTMLParagraphElement | null = pageClone.querySelector('.item-path__text_store');
+        const addToCartButton = pageClone.querySelector('.add-to-cart-button .default-button');
 
         if (
           itemCategoryPath &&
@@ -41,7 +49,8 @@ export class ItemPage {
           rating &&
           curPrice &&
           origPrice &&
-          storeLink
+          storeLink &&
+          addToCartButton
         ) {
           itemCategoryPath.textContent = item.category;
           itemBrandPath.textContent = item.brand;
@@ -62,6 +71,7 @@ export class ItemPage {
           rating.textContent = `${item.rating}`;
           curPrice.textContent = `${item.price}$`;
           origPrice.textContent = `${(item.price / (1 - item.discountPercentage / 100)).toFixed(0)}$`;
+          addToCartButton.id = `${item.id}`;
 
           fragment.append(pageClone);
 
@@ -81,6 +91,16 @@ export class ItemPage {
           sideImages.addEventListener('click', (event) => {
             this.changeImg(event);
           });
+
+          const localData = app.localStorage.get('items');
+          let localItems: IStorageData[] = [];
+          if (localData) {
+            localItems = JSON.parse(localData) as IStorageData[];
+          }
+          if (localItems.find((el) => el.id === item.id)) {
+            addToCartButton.textContent = 'Drop from cart';
+          }
+          addToCartButton.addEventListener('click', (event) => this.costChanging.changeCostFromItemCard(event));
         }
       }
     }
