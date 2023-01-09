@@ -78,6 +78,22 @@ export class ItemPage {
             app.pageRouter.navigateTo(`?category=${encodeURI(item.category)}&brand=${encodeURI(item.brand)}`)
           );
           storeLink.addEventListener('click', () => app.pageRouter.navigateTo('/'));
+          sideImages.addEventListener('click', (event) => {
+            this.changeImg(event);
+          });
+        }
+      }
+    }
+  }
+  private changeImg(event: Event) {
+    const imgTarget = event.target;
+
+    if (imgTarget instanceof Element) {
+      const img = imgTarget.closest('.side-images__img');
+      if (img instanceof HTMLParagraphElement) {
+        const mainImg = document.querySelector('.main-image');
+        if (mainImg instanceof HTMLDivElement) {
+          mainImg.style.backgroundImage = img.style.backgroundImage;
         }
       }
     }
