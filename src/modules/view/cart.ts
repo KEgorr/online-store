@@ -17,9 +17,12 @@ export class Cart {
     } else {
       const cartPageTemp: HTMLTemplateElement | null = document.querySelector('#cartPage');
       const productsTemp: HTMLTemplateElement | null = document.querySelector('#productsInCart');
+
       if (cartPageTemp && productsTemp) {
         const cartClone = cartPageTemp.content.cloneNode(true);
 
+        let totalCostNumber = 0;
+        let totalProductsNumber = 0;
         localItems.forEach((item, index) => {
           const itemClone = productsTemp.content.cloneNode(true);
 
@@ -37,6 +40,8 @@ export class Cart {
             const price: HTMLSpanElement | null = itemClone.querySelector('.price-value');
 
             const productsBlock: HTMLDivElement | null = cartClone.querySelector('.products');
+            const totalProducts: HTMLSpanElement | null = cartClone.querySelector('.info-number__products');
+            const totalCost: HTMLSpanElement | null = cartClone.querySelector('.info-number__total');
             if (
               productNumber &&
               productImg &&
@@ -47,7 +52,9 @@ export class Cart {
               productStock &&
               curInCart &&
               price &&
-              productsBlock
+              productsBlock &&
+              totalCost &&
+              totalProducts
             ) {
               productNumber.textContent = `${index + 1}`;
               productImg.style.backgroundImage = `url(${item.thumbnail})`;
@@ -58,8 +65,13 @@ export class Cart {
               productStock.textContent = `${item.stock}`;
               if (item.curInCart) {
                 curInCart.textContent = `${item.curInCart}`;
+                totalProductsNumber = totalProductsNumber + item.curInCart;
+                totalCostNumber = totalCostNumber + item.curInCart * item.price;
               }
               price.textContent = `${item.price}$`;
+
+              totalCost.textContent = `${totalCostNumber}$`;
+              totalProducts.textContent = `${totalProductsNumber}`;
 
               productsBlock.appendChild(itemClone);
             }
