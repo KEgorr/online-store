@@ -11,7 +11,7 @@ export class Cart {
     const fragment = document.createDocumentFragment();
     if (localItems.length === 0) {
       const cartEmptyText = document.createElement('p');
-      cartEmptyText.classList.add('.empty-cart-text');
+      cartEmptyText.classList.add('empty-cart-text');
       cartEmptyText.textContent = 'Cart is Empty';
       fragment.append(cartEmptyText);
     } else {
@@ -23,7 +23,7 @@ export class Cart {
         localItems.forEach((item, index) => {
           const itemClone = productsTemp.content.cloneNode(true);
 
-          if (itemClone instanceof DocumentFragment && itemClone instanceof DocumentFragment) {
+          if (itemClone instanceof DocumentFragment && cartClone instanceof DocumentFragment) {
             const productNumber: HTMLParagraphElement | null = itemClone.querySelector('.product__number');
             const productImg: HTMLDivElement | null = itemClone.querySelector('.product__img');
             const productTittle: HTMLParagraphElement | null = itemClone.querySelector('.product-info__tittle');
@@ -36,6 +36,7 @@ export class Cart {
             const curInCart: HTMLParagraphElement | null = itemClone.querySelector('.current-product-number');
             const price: HTMLSpanElement | null = itemClone.querySelector('.price-value');
 
+            const productsBlock: HTMLDivElement | null = cartClone.querySelector('.products');
             if (
               productNumber &&
               productImg &&
@@ -45,7 +46,8 @@ export class Cart {
               productDiscount &&
               productStock &&
               curInCart &&
-              price
+              price &&
+              productsBlock
             ) {
               productNumber.textContent = `${index + 1}`;
               productImg.style.backgroundImage = `url(${item.thumbnail})`;
@@ -58,9 +60,9 @@ export class Cart {
                 curInCart.textContent = `${item.curInCart}`;
               }
               price.textContent = `${item.price}$`;
-            }
 
-            cartClone.appendChild(itemClone);
+              productsBlock.appendChild(itemClone);
+            }
           }
         });
         fragment.appendChild(cartClone);
