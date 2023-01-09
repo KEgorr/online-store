@@ -14,7 +14,7 @@ export class Cost {
     }
 
     if (targetButton instanceof Element) {
-      const newItem = data.products.find((el) => el.id === parseInt(targetButton.id));
+      const newItem = data.products.find((el) => el.id === parseInt(targetButton.id)) as IStorageData;
 
       if (newItem) {
         const itemCost = newItem.price;
@@ -28,6 +28,7 @@ export class Cost {
             costInHeader.textContent = `${parseInt(costInHeader.textContent) + itemCost}`;
             targetButton.textContent = 'Drop from cart';
             shoppingCart.textContent = `${parseInt(shoppingCart.textContent) + 1}`;
+            newItem.curInCart = 1;
             items.push(newItem);
 
             if (targetCard) {
@@ -37,7 +38,7 @@ export class Cost {
             costInHeader.textContent = `${parseInt(costInHeader.textContent) - itemCost}`;
             targetButton.textContent = 'Add to cart';
             shoppingCart.textContent = `${parseInt(shoppingCart.textContent) - 1}`;
-            items = items.filter((item) => item.title !== newItem.title);
+            items = items.filter((item) => item.id !== newItem.id);
 
             if (targetCard) {
               targetCard.classList.remove('item-in-cart');

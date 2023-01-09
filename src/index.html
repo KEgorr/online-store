@@ -211,5 +211,71 @@
       </section>
       <section class="items-section"></section>
     </template>
+
+    <template id="cartPage">
+      <section class="cartSection">
+        <div class="products-in-cart">
+          <div class="products-in-cart-tittle">
+            <p class="tittle-name">Products in Cart</p>
+            <div class="limit">
+              <span class="limit__tittle">LIMIT:</span>
+              <input type="number" min="1" value="3" class="limit__number" />
+            </div>
+            <div class="pages">
+              <div class="pages-button-left">
+                <button class="button-arrow"><</button>
+              </div>
+              <p class="pages__number">1</p>
+              <div class="pages-button-right">
+                <button class="button-arrow">></button>
+              </div>
+            </div>
+          </div>
+          <div class="products"></div>
+        </div>
+        <div class="summary">
+          <p class="summary__tittle">Summary</p>
+          <ul class="summary-info">
+            <li class="summary-info-text">Products: <span class="info-number info-number__products"></span></li>
+            <li class="summary-info-text">Total: <span class="info-number info-number__total"></span></li>
+            <li class="promo">
+              <input type="search" placeholder="Enter promo code" />
+              <p class="promo__promo-code">Promo for test: 'RS', 'EPM'</p>
+            </li>
+          </ul>
+          <div class="by-now-button">
+            <button class="default-button">Buy now</button>
+          </div>
+        </div>
+      </section>
+    </template>
+
+    <template id="productsInCart">
+      <div class="product">
+        <p class="product__number"></p>
+        <div class="product__img"></div>
+        <div class="product-info">
+          <p class="product-info__tittle"></p>
+          <p class="product-info__description"></p>
+          <div class="product-other">
+            <p class="product-other__rating">Rating: <span class="rating-value"></span></p>
+            <p class="product-other__discount">Discount: <span class="discount-value"></span></p>
+          </div>
+        </div>
+        <div class="product-number-control">
+          <p class="product-number-text">Stock: <span class="stock-value"></span></p>
+          <div class="stock-changing">
+            <div class="button-stock-increase">
+              <button class="button-stock">+</button>
+            </div>
+            <p class="current-product-number"></p>
+            <div class="button-stock-reduce">
+              <button class="button-stock">-</button>
+            </div>
+          </div>
+          <p class="product-number-text"><span class="price-value"></span></p>
+        </div>
+      </div>
+    </template>
   </body>
 </html>

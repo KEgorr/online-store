@@ -10,6 +10,7 @@ export interface IStorageData {
   category: string;
   thumbnail: string;
   images: string[];
+  curInCart?: number;
 }
 
 export enum FiletsCategory {
