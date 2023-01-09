@@ -1,3 +1,4 @@
+import { app } from '../..';
 import { IStorageData } from '../types/dataTypes';
 
 export class Items {
@@ -27,6 +28,7 @@ export class Items {
             const itemCharRating: HTMLSpanElement | null = itemClone.querySelector('.characteristics__rating');
             const curPrice: HTMLParagraphElement | null = itemClone.querySelector('.price__current-price');
             const origPrice: HTMLSpanElement | null = itemClone.querySelector('.price__original-price');
+            const addToCartButton = itemClone.querySelector('.add-to-cart-button .default-button');
 
             if (
               itemName &&
@@ -37,7 +39,8 @@ export class Items {
               itemCharCategory &&
               itemCharRating &&
               curPrice &&
-              origPrice
+              origPrice &&
+              addToCartButton
             ) {
               itemName.textContent = item.title;
               itemImg.style.backgroundImage = `url(${item.thumbnail})`;
@@ -49,6 +52,15 @@ export class Items {
               curPrice.textContent = `${item.price}$`;
               origPrice.textContent = `${(item.price / (1 - item.discountPercentage / 100)).toFixed(0)}$`;
 
+              const localData = app.localStorage.get('items');
+              let localItems: IStorageData[] = [];
+              if (localData) {
+                localItems = JSON.parse(localData) as IStorageData[];
+              }
+              if (localItems.find((el) => el.title === item.title)) {
+                itemClone.querySelector('.item')?.classList.add('item-in-cart');
+                addToCartButton.textContent = 'Drop from cart';
+              }
               itemClone.querySelector('.item')?.setAttribute('id', `${item.id}`);
               fragment.append(itemClone);
             }

@@ -30,7 +30,7 @@ export class PageRouter extends Router {
   private navigateToItemPage(event: Event) {
     const target = event.target;
 
-    if (target instanceof Element) {
+    if (target instanceof Element && !target.closest('.add-to-cart-button')) {
       const item = target.closest('.item');
       if (item instanceof HTMLDivElement && item !== null) {
         this.navigateTo(`products/${item.id}`);
