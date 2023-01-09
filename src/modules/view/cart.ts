@@ -73,6 +73,7 @@ export class Cart {
               totalCost.textContent = `${totalCostNumber}$`;
               totalProducts.textContent = `${totalProductsNumber}`;
 
+              itemClone.querySelector('.product')?.setAttribute('id', `${item.id}`);
               productsBlock.appendChild(itemClone);
             }
           }
