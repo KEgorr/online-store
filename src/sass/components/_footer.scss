@@ -1,0 +1,43 @@
+.body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main {
+  flex-grow: 1;
+}
+
+.footer {
+  flex-shrink: 0;
+  background-color: $color_header;
+  .wrapper {
+    display: flex;
+    padding: 2rem;
+    font-size: 1.2rem;
+    justify-content: center;
+    align-items: center;
+    column-gap: 2rem;
+  }
+}
+
+.credits {
+  display: flex;
+  flex-direction: column;
+}
+
+.credits-link {
+  text-decoration: none;
+  font-weight: bold;
+  color: $color_logo;
+}
+
+.rs-school-img {
+  background-image: url('https://rs.school/images/rs_school_js.svg');
+  width: 150px;
+  height: 80px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
