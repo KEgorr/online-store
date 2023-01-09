@@ -155,6 +155,26 @@ export class AddQueryParams {
         document.body.removeChild(copyUrl);
       };
     }
+
+    const sortOptions = document.querySelectorAll('.sort-options__name');
+    sortOptions.forEach((el) => {
+      el.addEventListener('click', (event) => {
+        const sortTarget = event.target;
+        if (sortTarget instanceof Element) {
+          const sortValue = sortTarget.getAttribute('value');
+          const paramsQuery: { [key: string]: string[] } = {};
+          if (sortValue) {
+            paramsQuery['sort'] = [sortValue];
+            this.setAttribute('sort', this.createQueryParams(paramsQuery));
+
+            const sortName = document.querySelector('.sort-name');
+            if (sortName) {
+              sortName.textContent = sortTarget.textContent;
+            }
+          }
+        }
+      });
+    });
   }
 }
 

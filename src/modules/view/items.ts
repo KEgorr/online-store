@@ -73,31 +73,6 @@ export class Items {
     const params = new URLSearchParams(window.location.search);
 
     if (params) {
-      // TODO filters by different values
-      // const params = location.search;
-      // const param = new URLSearchParams(params);
-      // const arrParams = Array.from(param.entries());
-      // arrParams.forEach((arr) => {
-      //   data.forEach((item: IStorageData) => {
-      //     console.log(item);
-      //   });
-      //   console.log(arr);
-      // });
-      // const result = params
-      //   .slice(params.indexOf('?') + 1)
-      //   .split('&')
-      //   .reduce((param, hash) => {
-      //     const [key, val] = hash.split('=');
-      //     return Object.assign(param, { [key]: decodeURIComponent(val) });
-      //   }, {});
-      // console.log(result);
-      // const paramsObj = Object.fromEntries(Array.from(params.entries()).map(([key, value]) => [key, value]));
-      // arrPrams.forEach((val) => {
-      //   const [key, value] = val;
-      //   Object.assign(params, { [key]: value });
-      // });
-      // console.log(paramsObj);
-
       const paramsArr = Array.from(params.entries());
       paramsArr.forEach(([key, value]) => {
         let validValues = value.split('↕');
@@ -125,6 +100,17 @@ export class Items {
               }
             }
           });
+        } else if (key === 'sort') {
+          const sortingOptions = validValues[0].split('-');
+          const sortName = sortingOptions[0];
+          const sortCategory = sortingOptions[1];
+          if (sortName === 'price' || sortName === 'discountPercentage' || sortName === 'rating') {
+            if (sortCategory === 'asc') {
+              data = data.sort((a, b) => a[sortName] - b[sortName]);
+            } else if (sortCategory === 'desc') {
+              data = data.sort((a, b) => b[sortName] - a[sortName]);
+            }
+          }
         }
       });
     }

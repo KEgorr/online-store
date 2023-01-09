@@ -32,6 +32,7 @@ export class MainPage {
     this.filters.filtersChangeState();
     this.routerFilter.add();
 
+    document.querySelector('.sort-value')?.addEventListener('click', () => this.filters.openSortOptions());
     document
       .querySelectorAll('input')
       .forEach((el) => el.addEventListener('input', () => this.items.drawItems(data.products)));

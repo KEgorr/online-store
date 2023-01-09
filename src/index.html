@@ -113,10 +113,41 @@
           </div>
           <div class="sort-filters">
             <h2 class="filters-name">Sorting</h2>
-            <div class="sort-value">
-              <p class="sort-name">Sort options:</p>
-              <span class="vertical-line"></span>
-              <span class="sort-checkmark"></span>
+            <div class="custom-select">
+              <label>
+                <div class="sort-value">
+                  <p class="sort-name">Sort options:</p>
+                  <span class="vertical-line"></span>
+                  <span class="sort-checkmark"></span>
+                  <input type="checkbox" class="custom-select__checkbox" />
+                </div>
+              </label>
+              <div class="sort-options sort-options_hidden">
+                <label class="sort-options__option">
+                  <input class="radio-sort" type="radio" value="price-asc" name="sort" />
+                  <p class="sort-options__name" value="price-asc">Sort by Price ASC</p>
+                </label>
+                <label class="sort-options__option">
+                  <input class="radio-sort" type="radio" value="price-desc" name="sort" />
+                  <p class="sort-options__name" value="price-desc">Sort by Price DESC</p>
+                </label>
+                <label class="sort-options__option">
+                  <input class="radio-sort" type="radio" value="rating-asc" name="sort" />
+                  <p class="sort-options__name" value="rating-asc">Sort by Rating ASC</p>
+                </label>
+                <label class="sort-options__option">
+                  <input class="radio-sort" type="radio" value="rating-desc" name="sort" />
+                  <p class="sort-options__name" value="rating-desc">Sort by Rating DESC</p>
+                </label>
+                <label class="sort-options__option">
+                  <input class="radio-sort" type="radio" value="discountPercentage-asc" name="sort" />
+                  <p class="sort-options__name" value="discountPercentage-asc">Sort by Discount ASC</p>
+                </label>
+                <label class="sort-options__option">
+                  <input class="radio-sort" type="radio" value="discountPercentage-desc" name="sort" />
+                  <p class="sort-options__name" value="discountPercentage-desc">Sort by Discount DESC</p>
+                </label>
+              </div>
             </div>
           </div>
         </div>
