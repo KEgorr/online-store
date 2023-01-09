@@ -10,7 +10,7 @@ export class App {
   constructor() {
     this.pageRouter = new PageRouter({
       mode: 'history',
-      page404: () => console.log('page 404'),
+      page404: () => this.error404(),
     });
     this.localStorage = new LocalStorage();
   }
@@ -41,6 +41,17 @@ export class App {
       });
       cost.textContent = curCost;
       shoppingCart.textContent = `${localItems.length}`;
+    }
+  }
+  private error404() {
+    const errorText = document.createElement('p');
+    errorText.classList.add('error-text');
+    errorText.textContent = 'ERROR 404 (PAGE NOT FOUND)';
+
+    const main = document.querySelector('.main .wrapper');
+
+    if (main) {
+      main.appendChild(errorText);
     }
   }
 }
