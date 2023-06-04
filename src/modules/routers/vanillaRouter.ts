@@ -39,7 +39,7 @@ export class PageRouter extends Router {
       if (item instanceof HTMLDivElement && item !== null) {
         this.navigateTo(`products/${item.id}`);
       }
-      if (target.closest('.product')) {
+      if (target.closest('.product-info')) {
         const product = target.closest('.product');
         if (product instanceof HTMLDivElement) {
           this.navigateTo(`products/${product.id}`);
