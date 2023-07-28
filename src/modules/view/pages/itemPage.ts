@@ -1,22 +1,17 @@
 import { app } from '../../..';
 import { IStorageData } from '../../types/dataTypes';
-import { Cost } from '../cost';
 
 export class ItemPage {
-  private costChanging: Cost;
-
-  constructor() {
-    this.costChanging = new Cost();
-  }
-
   public drawItemPage(item: IStorageData) {
     const fragment = document.createDocumentFragment();
     const pageTemp: HTMLTemplateElement | null = document.querySelector('#itemPage');
+    const productsTemp: HTMLTemplateElement | null = document.querySelector('#productsInCart');
 
-    if (pageTemp) {
+    if (pageTemp && productsTemp) {
       const pageClone = pageTemp.content.cloneNode(true);
+      const productsClone = productsTemp.content.cloneNode(true);
 
-      if (pageClone instanceof DocumentFragment) {
+      if (pageClone instanceof DocumentFragment && productsClone instanceof DocumentFragment) {
         const itemCategoryPath: HTMLParagraphElement | null = pageClone.querySelector('.item-path__text_category');
         const itemBrandPath: HTMLParagraphElement | null = pageClone.querySelector('.item-path__text_brand');
         const itemTittlePath: HTMLParagraphElement | null = pageClone.querySelector('.item-path__text_tittle');
@@ -32,7 +27,8 @@ export class ItemPage {
         const curPrice: HTMLParagraphElement | null = pageClone.querySelector('.price__current-price');
         const origPrice: HTMLSpanElement | null = pageClone.querySelector('.price__original-price');
         const storeLink: HTMLParagraphElement | null = pageClone.querySelector('.item-path__text_store');
-        const addToCartButton = pageClone.querySelector('.add-to-cart-button .default-button');
+        const addToCartButtonBlock = pageClone.querySelector('.add-to-cart-button');
+        const addToCartDefaultButton = pageClone.querySelector('.add-to-cart-button .button-stock-increase');
 
         if (
           itemCategoryPath &&
@@ -50,7 +46,8 @@ export class ItemPage {
           curPrice &&
           origPrice &&
           storeLink &&
-          addToCartButton
+          addToCartButtonBlock &&
+          addToCartDefaultButton
         ) {
           itemCategoryPath.textContent = item.category;
           itemBrandPath.textContent = item.brand;
@@ -71,7 +68,7 @@ export class ItemPage {
           rating.textContent = `${item.rating}`;
           curPrice.textContent = `${item.price}$`;
           origPrice.textContent = `${(item.price / (1 - item.discountPercentage / 100)).toFixed(0)}$`;
-          addToCartButton.id = `${item.id}`;
+          addToCartDefaultButton.id = `${item.id}`;
 
           fragment.append(pageClone);
 
@@ -97,10 +94,22 @@ export class ItemPage {
           if (localData) {
             localItems = JSON.parse(localData) as IStorageData[];
           }
-          if (localItems.find((el) => el.id === item.id)) {
-            addToCartButton.textContent = 'Drop from cart';
+          const localItem = localItems.find((el) => el.id === item.id);
+          if (localItem) {
+            const controlPanel = productsClone.querySelector('.stock-changing');
+            const addItemToCartButton = productsClone.querySelector('.button-stock-increase');
+            const removeItemFromCartButton = productsClone.querySelector('.button-stock-reduce');
+            const itemsInCart = productsClone.querySelector('.current-product-number');
+            if (controlPanel && addItemToCartButton && removeItemFromCartButton && itemsInCart) {
+              addItemToCartButton.id = `${item.id}`;
+              removeItemFromCartButton.id = `${item.id}`;
+              if (localItem.curInCart) {
+                itemsInCart.textContent = `${localItem.curInCart}`;
+              }
+              addToCartButtonBlock.innerHTML = '';
+              addToCartButtonBlock.appendChild(controlPanel);
+            }
           }
-          addToCartButton.addEventListener('click', (event) => this.costChanging.changeCostFromItemCard(event));
         }
       }
     }

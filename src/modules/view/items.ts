@@ -7,8 +7,9 @@ export class Items {
 
     const fragment = document.createDocumentFragment();
     const itemTemp: HTMLTemplateElement | null = document.querySelector('#itemTemp');
+    const productsTemp: HTMLTemplateElement | null = document.querySelector('#productsInCart');
 
-    if (itemTemp) {
+    if (itemTemp && productsTemp) {
       if (items.length === 0) {
         const noItemsText = document.createElement('p');
         noItemsText.textContent = 'No Items found 😥';
@@ -17,8 +18,9 @@ export class Items {
       } else {
         items.forEach((item: IStorageData) => {
           const itemClone = itemTemp.content.cloneNode(true);
+          const productsClone = productsTemp.content.cloneNode(true);
 
-          if (itemClone instanceof DocumentFragment) {
+          if (itemClone instanceof DocumentFragment && productsClone instanceof DocumentFragment) {
             const itemName: HTMLParagraphElement | null = itemClone.querySelector('.item__name');
             const itemImg: HTMLSpanElement | null = itemClone.querySelector('.item__img');
             const itemDiscount: HTMLSpanElement | null = itemClone.querySelector('.item__discount');
@@ -28,7 +30,8 @@ export class Items {
             const itemCharRating: HTMLSpanElement | null = itemClone.querySelector('.characteristics__rating');
             const curPrice: HTMLParagraphElement | null = itemClone.querySelector('.price__current-price');
             const origPrice: HTMLSpanElement | null = itemClone.querySelector('.price__original-price');
-            const addToCartButton = itemClone.querySelector('.add-to-cart-button .default-button');
+            const addToCartButtonBlock = itemClone.querySelector('.add-to-cart-button');
+            const addToCartDefaultButton = itemClone.querySelector('.add-to-cart-button .button-stock-increase');
 
             if (
               itemName &&
@@ -40,7 +43,8 @@ export class Items {
               itemCharRating &&
               curPrice &&
               origPrice &&
-              addToCartButton
+              addToCartButtonBlock &&
+              addToCartDefaultButton
             ) {
               itemName.textContent = item.title;
               itemImg.style.backgroundImage = `url(${item.thumbnail})`;
@@ -51,16 +55,30 @@ export class Items {
               itemCharRating.textContent = `${item.rating}`;
               curPrice.textContent = `${item.price}$`;
               origPrice.textContent = `${(item.price / (1 - item.discountPercentage / 100)).toFixed(0)}$`;
-              addToCartButton.id = `${item.id}`;
+              addToCartDefaultButton.id = `${item.id}`;
 
               const localData = app.localStorage.get('items');
               let localItems: IStorageData[] = [];
               if (localData) {
                 localItems = JSON.parse(localData) as IStorageData[];
               }
-              if (localItems.find((el) => el.id === item.id)) {
+
+              const localItem = localItems.find((el) => el.id === item.id);
+              if (localItem) {
                 itemClone.querySelector('.item')?.classList.add('item-in-cart');
-                addToCartButton.textContent = 'Drop from cart';
+                const controlPanel = productsClone.querySelector('.stock-changing');
+                const addItemToCartButton = productsClone.querySelector('.button-stock-increase');
+                const removeItemFromCartButton = productsClone.querySelector('.button-stock-reduce');
+                const itemsInCart = productsClone.querySelector('.current-product-number');
+                if (controlPanel && addItemToCartButton && removeItemFromCartButton && itemsInCart) {
+                  addItemToCartButton.id = `${item.id}`;
+                  removeItemFromCartButton.id = `${item.id}`;
+                  if (localItem.curInCart) {
+                    itemsInCart.textContent = `${localItem.curInCart}`;
+                  }
+                  addToCartButtonBlock.innerHTML = '';
+                  addToCartButtonBlock.appendChild(controlPanel);
+                }
               }
               itemClone.querySelector('.item')?.setAttribute('id', `${item.id}`);
               fragment.append(itemClone);

@@ -3,19 +3,16 @@ import { Filters } from '../filters';
 import { Items } from '../items';
 import * as data from '../../data/store-items.json';
 import { FiletsCategory, FiletsCategoryRange } from '../../types/dataTypes';
-import { Cost } from '../cost';
 
 export class MainPage {
   private items: Items;
   private filters: Filters;
   private routerFilter: AddQueryParams;
-  private costChanging: Cost;
 
   constructor() {
     this.items = new Items();
     this.filters = new Filters();
     this.routerFilter = new AddQueryParams();
-    this.costChanging = new Cost();
   }
   public drawMainPage() {
     const pageTemp: HTMLTemplateElement | null = document.querySelector('#mainPage');
@@ -34,10 +31,6 @@ export class MainPage {
     this.filters.drawRangeFilters(data.products, FiletsCategoryRange.Stock);
     this.filters.filtersChangeState();
     this.routerFilter.add();
-
-    document
-      .querySelector('.items-section')
-      ?.addEventListener('click', (event) => this.costChanging.changeCostFromItemCard(event));
 
     document.querySelector('.sort-value')?.addEventListener('click', () => this.filters.openSortOptions());
     document

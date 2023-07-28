@@ -38,10 +38,13 @@ export class Cart {
             const productStock: HTMLSpanElement | null = itemClone.querySelector('.stock-value');
             const curInCart: HTMLParagraphElement | null = itemClone.querySelector('.current-product-number');
             const price: HTMLSpanElement | null = itemClone.querySelector('.price-value');
+            const addItemToCartButton: HTMLElement | null = itemClone.querySelector('.button-stock-increase');
+            const removeItemToCartButton: HTMLElement | null = itemClone.querySelector('.button-stock-reduce');
 
             const productsBlock: HTMLDivElement | null = cartClone.querySelector('.products');
             const totalProducts: HTMLSpanElement | null = cartClone.querySelector('.info-number__products');
             const totalCost: HTMLSpanElement | null = cartClone.querySelector('.info-number__total');
+
             if (
               productNumber &&
               productImg &&
@@ -54,7 +57,9 @@ export class Cart {
               price &&
               productsBlock &&
               totalCost &&
-              totalProducts
+              totalProducts &&
+              addItemToCartButton &&
+              removeItemToCartButton
             ) {
               productNumber.textContent = `${index + 1}`;
               productImg.style.backgroundImage = `url(${item.thumbnail})`;
@@ -72,6 +77,9 @@ export class Cart {
 
               totalCost.textContent = `${totalCostNumber}$`;
               totalProducts.textContent = `${totalProductsNumber}`;
+
+              addItemToCartButton.id = `${item.id}`;
+              removeItemToCartButton.id = `${item.id}`;
 
               itemClone.querySelector('.product')?.setAttribute('id', `${item.id}`);
               productsBlock.appendChild(itemClone);
