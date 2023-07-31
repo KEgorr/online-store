@@ -1,13 +1,11 @@
 import { app } from '../..';
 import { IStorageData } from '../types/dataTypes';
+import { getTotalCost, getTotalItems } from './utils/costUtils';
 
 export class Cart {
   drawCart() {
-    const localData = app.localStorage.get('items');
-    let localItems: IStorageData[] = [];
-    if (localData) {
-      localItems = JSON.parse(localData) as IStorageData[];
-    }
+    const { localItems, items, pageNumber, limit } = this.getDataItems();
+
     const fragment = document.createDocumentFragment();
     if (localItems.length === 0) {
       const cartEmptyText = document.createElement('p');
@@ -21,9 +19,7 @@ export class Cart {
       if (cartPageTemp && productsTemp) {
         const cartClone = cartPageTemp.content.cloneNode(true);
 
-        let totalCostNumber = 0;
-        let totalProductsNumber = 0;
-        localItems.forEach((item, index) => {
+        items.forEach((item, index) => {
           const itemClone = productsTemp.content.cloneNode(true);
 
           if (itemClone instanceof DocumentFragment && cartClone instanceof DocumentFragment) {
@@ -44,6 +40,8 @@ export class Cart {
             const productsBlock: HTMLDivElement | null = cartClone.querySelector('.products');
             const totalProducts: HTMLSpanElement | null = cartClone.querySelector('.info-number__products');
             const totalCost: HTMLSpanElement | null = cartClone.querySelector('.info-number__total');
+            const limitNumber: HTMLInputElement | null = cartClone.querySelector('.limit__number');
+            const pageNumberText: HTMLParagraphElement | null = cartClone.querySelector('.pages__number');
 
             if (
               productNumber &&
@@ -59,8 +57,12 @@ export class Cart {
               totalCost &&
               totalProducts &&
               addItemToCartButton &&
-              removeItemToCartButton
+              removeItemToCartButton &&
+              limitNumber &&
+              pageNumberText
             ) {
+              pageNumberText.textContent = `${pageNumber}`;
+              limitNumber.value = `${limit}`;
               productNumber.textContent = `${index + 1}`;
               productImg.style.backgroundImage = `url(${item.thumbnail})`;
               productTittle.textContent = item.title;
@@ -70,13 +72,10 @@ export class Cart {
               productStock.textContent = `${item.stock}`;
               if (item.curInCart) {
                 curInCart.textContent = `${item.curInCart}`;
-                totalProductsNumber = totalProductsNumber + item.curInCart;
-                totalCostNumber = totalCostNumber + item.curInCart * item.price;
               }
+              totalProducts.textContent = `${getTotalItems(localItems)}`;
+              totalCost.textContent = `${getTotalCost(localItems)}$`;
               price.textContent = `${item.price}$`;
-
-              totalCost.textContent = `${totalCostNumber}$`;
-              totalProducts.textContent = `${totalProductsNumber}`;
 
               addItemToCartButton.id = `${item.id}`;
               removeItemToCartButton.id = `${item.id}`;
@@ -95,6 +94,71 @@ export class Cart {
     if (main) {
       main.innerHTML = '';
       main.appendChild(fragment);
+    }
+  }
+
+  changeLimitInCart(event: Event) {
+    const target = event.target;
+    if (target instanceof Element) {
+      const limitCounter = target.closest('.limit__number');
+      if (!limitCounter) return;
+      if (limitCounter instanceof HTMLInputElement) {
+        localStorage.setItem('cartLimit', limitCounter.value);
+      }
+    }
+    this.drawCart();
+  }
+
+  getDataItems(): { localItems: IStorageData[]; items: IStorageData[]; pageNumber: number; limit: number } {
+    const localData = app.localStorage.get('items');
+    let localItems: IStorageData[] = [];
+    if (localData) {
+      localItems = JSON.parse(localData) as IStorageData[];
+    }
+    let limit = 3;
+    let pageNumber = 1;
+    const localLimit = app.localStorage.get('cartLimit');
+    const localPageNumber = app.localStorage.get('cartPageNumber');
+    if (localLimit && localPageNumber) {
+      limit = parseInt(localLimit);
+      pageNumber = parseInt(localPageNumber);
+    }
+    const items = localItems.slice().splice((pageNumber - 1) * limit, limit);
+
+    if (items.length === 0 && localItems.length !== 0) {
+      app.localStorage.set('cartPageNumber', `${pageNumber - 1}`);
+      return this.getDataItems();
+    }
+
+    return { localItems, items, pageNumber, limit };
+  }
+
+  cartPageIncrease(event: Event) {
+    const target = event.target;
+
+    if (target instanceof HTMLElement && target.closest('.pages-button-right')) {
+      const pageNumberData = app.localStorage.get('cartPageNumber');
+      if (pageNumberData) {
+        const pageNumber = parseInt(pageNumberData);
+        app.localStorage.set('cartPageNumber', `${pageNumber + 1}`);
+        this.drawCart();
+      }
+    }
+  }
+
+  cartPageDecrease(event: Event) {
+    const target = event.target;
+
+    if (target instanceof HTMLElement && target.closest('.pages-button-left')) {
+      const pageNumberData = app.localStorage.get('cartPageNumber');
+      if (pageNumberData) {
+        const pageNumber = parseInt(pageNumberData);
+        if (pageNumber === 1) {
+          return;
+        }
+        app.localStorage.set('cartPageNumber', `${pageNumber - 1}`);
+        this.drawCart();
+      }
     }
   }
 }
