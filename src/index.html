@@ -250,10 +250,22 @@
           <p class="summary__tittle">Summary</p>
           <ul class="summary-info">
             <li class="summary-info-text">Products: <span class="char-value info-number__products"></span></li>
-            <li class="summary-info-text">Total: <span class="char-value info-number__total"></span></li>
+            <li class="summary-info-text">
+              Total: <span class="char-value info-number__total"></span>
+              <span class="price__current-price text-hidden"></span>
+            </li>
             <li class="promo">
               <input type="search" placeholder="Enter promo code" class="search" />
               <p class="promo__promo-code">Promo for test: 'RS', 'EPM'</p>
+              <div class="promo-applied-block">
+                <p class="promo__promo-code text-hidden" id="RS-promo">
+                  promo code RS applied (-10%) <span class="cancel-ico" id="RS-cancel"></span>
+                </p>
+                <p class="promo__promo-code text-hidden" id="EPM-promo">
+                  promo code EPM applied (-5%) <span class="cancel-ico" id="EPM-cancel"></span>
+                </p>
+                <p class="promo__promo-code-failed" id="invalid-promo">wrong promo code</p>
+              </div>
             </li>
           </ul>
           <div class="by-now-button">

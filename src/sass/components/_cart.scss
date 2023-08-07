@@ -42,6 +42,33 @@
 
 .promo__promo-code {
   color: $color_char_value;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.text-hidden {
+  display: none;
+}
+
+.promo__promo-code-failed {
+  color: $color_discount;
+  opacity: 0;
+}
+
+.promo__promo-code-failed_show {
+  animation-name: showHideText;
+  animation-duration: 4s;
+}
+
+.cancel-ico {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  background-image: url(../images/cancel-ico.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: inline-block;
 }
 
 .limit__number {
@@ -53,5 +80,23 @@
   font-size: 1rem;
   &:focus {
     outline: none;
+  }
+}
+
+@keyframes showHideText {
+  0% {
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
   }
 }

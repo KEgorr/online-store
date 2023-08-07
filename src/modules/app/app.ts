@@ -1,7 +1,7 @@
 import * as data from '../data/store-items.json';
 import LocalStorage from '../localStorage/localStorage';
 import { PageRouter } from '../routers/vanillaRouter';
-import { IStorageData } from '../types/dataTypes';
+import { IPromos, IStorageData } from '../types/dataTypes';
 import { Cart } from '../view/cart';
 import { Cost } from '../view/cost';
 
@@ -11,6 +11,10 @@ export class App {
   private costChanging: Cost;
   private cart: Cart;
 
+  public promos: IPromos;
+  public cartPageNumber: number;
+  public limitCartPage: number;
+
   constructor() {
     this.pageRouter = new PageRouter({
       mode: 'history',
@@ -19,6 +23,14 @@ export class App {
     this.localStorage = new LocalStorage();
     this.costChanging = new Cost();
     this.cart = new Cart();
+
+    this.promos = {
+      RS: false,
+      EPM: false,
+      invalidPromo: false,
+    };
+    this.cartPageNumber = 1;
+    this.limitCartPage = 3;
   }
 
   public start() {
@@ -43,6 +55,8 @@ export class App {
     document.querySelector('.body')?.addEventListener('change', (event) => this.cart.changeLimitInCart(event));
     document.querySelector('.body')?.addEventListener('click', (event) => this.cart.cartPageIncrease(event));
     document.querySelector('.body')?.addEventListener('click', (event) => this.cart.cartPageDecrease(event));
+    document.querySelector('.body')?.addEventListener('keydown', (event) => this.cart.enterPromoCode(event));
+    document.querySelector('.body')?.addEventListener('click', (event) => this.cart.removePromoCode(event));
   }
   private error404() {
     const errorText = document.createElement('p');

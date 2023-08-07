@@ -19,7 +19,7 @@ export class Cart {
       if (cartPageTemp && productsTemp) {
         const cartClone = cartPageTemp.content.cloneNode(true);
 
-        items.forEach((item, index) => {
+        items.forEach((item) => {
           const itemClone = productsTemp.content.cloneNode(true);
 
           if (itemClone instanceof DocumentFragment && cartClone instanceof DocumentFragment) {
@@ -39,10 +39,16 @@ export class Cart {
 
             const productsBlock: HTMLDivElement | null = cartClone.querySelector('.products');
             const totalProducts: HTMLSpanElement | null = cartClone.querySelector('.info-number__products');
-            const totalCost: HTMLSpanElement | null = cartClone.querySelector('.info-number__total');
+            const totalCostText: HTMLSpanElement | null = cartClone.querySelector('.info-number__total');
+            const discountCostText: HTMLSpanElement | null = cartClone.querySelector('.price__current-price');
             const limitNumber: HTMLInputElement | null = cartClone.querySelector('.limit__number');
             const pageNumberText: HTMLParagraphElement | null = cartClone.querySelector('.pages__number');
 
+            const rsPromo: HTMLParagraphElement | null = cartClone.querySelector('#RS-promo');
+            const epmPromo: HTMLParagraphElement | null = cartClone.querySelector('#EPM-promo');
+            const invalidPromo: HTMLParagraphElement | null = cartClone.querySelector('#invalid-promo');
+
+            const indexInCart = item.indexInCart;
             if (
               productNumber &&
               productImg &&
@@ -54,31 +60,58 @@ export class Cart {
               curInCart &&
               price &&
               productsBlock &&
-              totalCost &&
+              totalCostText &&
               totalProducts &&
               addItemToCartButton &&
               removeItemToCartButton &&
               limitNumber &&
-              pageNumberText
+              pageNumberText &&
+              indexInCart &&
+              rsPromo &&
+              epmPromo &&
+              invalidPromo &&
+              discountCostText
             ) {
               pageNumberText.textContent = `${pageNumber}`;
               limitNumber.value = `${limit}`;
-              productNumber.textContent = `${index + 1}`;
+
+              productNumber.textContent = `${indexInCart}`;
               productImg.style.backgroundImage = `url(${item.thumbnail})`;
               productTittle.textContent = item.title;
               productDescription.textContent = item.description;
               productRating.textContent = `${item.rating}`;
               productDiscount.textContent = `${item.discountPercentage}%`;
               productStock.textContent = `${item.stock}`;
+
               if (item.curInCart) {
                 curInCart.textContent = `${item.curInCart}`;
               }
+
               totalProducts.textContent = `${getTotalItems(localItems)}`;
-              totalCost.textContent = `${getTotalCost(localItems)}$`;
+
+              const { totalCost, discountCost } = getTotalCost(localItems);
+              totalCostText.textContent = `${totalCost}$`;
               price.textContent = `${item.price}$`;
 
               addItemToCartButton.id = `${item.id}`;
               removeItemToCartButton.id = `${item.id}`;
+
+              if (app.promos.RS) {
+                rsPromo.classList.remove('text-hidden');
+              }
+              if (app.promos.EPM) {
+                epmPromo.classList.remove('text-hidden');
+              }
+
+              if (app.promos.EPM || app.promos.RS) {
+                discountCostText.classList.remove('text-hidden');
+                discountCostText.textContent = `${discountCost}$`;
+                totalCostText.classList.add('price__original-price');
+              }
+
+              if (app.promos.invalidPromo) {
+                invalidPromo.classList.add('promo__promo-code-failed_show');
+              }
 
               itemClone.querySelector('.product')?.setAttribute('id', `${item.id}`);
               productsBlock.appendChild(itemClone);
@@ -94,6 +127,7 @@ export class Cart {
     if (main) {
       main.innerHTML = '';
       main.appendChild(fragment);
+      app.promos.invalidPromo = false;
     }
   }
 
@@ -103,7 +137,7 @@ export class Cart {
       const limitCounter = target.closest('.limit__number');
       if (!limitCounter) return;
       if (limitCounter instanceof HTMLInputElement) {
-        localStorage.setItem('cartLimit', limitCounter.value);
+        app.limitCartPage = parseInt(limitCounter.value);
       }
     }
     this.drawCart();
@@ -114,19 +148,15 @@ export class Cart {
     let localItems: IStorageData[] = [];
     if (localData) {
       localItems = JSON.parse(localData) as IStorageData[];
+      localItems.map((item, i) => (item.indexInCart = i + 1));
     }
-    let limit = 3;
-    let pageNumber = 1;
-    const localLimit = app.localStorage.get('cartLimit');
-    const localPageNumber = app.localStorage.get('cartPageNumber');
-    if (localLimit && localPageNumber) {
-      limit = parseInt(localLimit);
-      pageNumber = parseInt(localPageNumber);
-    }
+    const limit = app.limitCartPage;
+    const pageNumber = app.cartPageNumber;
+
     const items = localItems.slice().splice((pageNumber - 1) * limit, limit);
 
     if (items.length === 0 && localItems.length !== 0) {
-      app.localStorage.set('cartPageNumber', `${pageNumber - 1}`);
+      app.cartPageNumber = pageNumber - 1;
       return this.getDataItems();
     }
 
@@ -137,12 +167,10 @@ export class Cart {
     const target = event.target;
 
     if (target instanceof HTMLElement && target.closest('.pages-button-right')) {
-      const pageNumberData = app.localStorage.get('cartPageNumber');
-      if (pageNumberData) {
-        const pageNumber = parseInt(pageNumberData);
-        app.localStorage.set('cartPageNumber', `${pageNumber + 1}`);
-        this.drawCart();
-      }
+      const pageNumberData = app.cartPageNumber;
+
+      app.cartPageNumber = pageNumberData + 1;
+      this.drawCart();
     }
   }
 
@@ -150,13 +178,43 @@ export class Cart {
     const target = event.target;
 
     if (target instanceof HTMLElement && target.closest('.pages-button-left')) {
-      const pageNumberData = app.localStorage.get('cartPageNumber');
-      if (pageNumberData) {
-        const pageNumber = parseInt(pageNumberData);
-        if (pageNumber === 1) {
-          return;
+      const pageNumber = app.cartPageNumber;
+      if (pageNumber === 1) {
+        return;
+      }
+      app.cartPageNumber = pageNumber - 1;
+      this.drawCart();
+    }
+  }
+
+  enterPromoCode(event: Event) {
+    const target = event.target;
+    if (target instanceof HTMLInputElement && target.closest('.promo') && event instanceof KeyboardEvent) {
+      const promoInput = target.value;
+
+      if (event.key === 'Enter') {
+        if (promoInput === 'RS') {
+          app.promos.RS = true;
+        } else if (promoInput === 'EPM') {
+          app.promos.EPM = true;
+        } else {
+          app.promos.invalidPromo = true;
         }
-        app.localStorage.set('cartPageNumber', `${pageNumber - 1}`);
+        this.drawCart();
+      }
+    }
+  }
+
+  removePromoCode(event: Event) {
+    const target = event.target;
+
+    if (target instanceof HTMLSpanElement) {
+      if (target.closest('#RS-cancel')) {
+        app.promos.RS = false;
+        this.drawCart();
+      }
+      if (target.closest('#EPM-cancel')) {
+        app.promos.EPM = false;
         this.drawCart();
       }
     }

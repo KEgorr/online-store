@@ -112,10 +112,10 @@ export class Cost {
     const itemsNumberHeader = document.querySelector('.shopping-cart__items');
 
     const itemsNumber = getTotalItems(items);
-    const currentCost = getTotalCost(items);
+    const { totalCost } = getTotalCost(items);
     if (itemsNumberHeader && costInHeader) {
       itemsNumberHeader.textContent = `${itemsNumber}`;
-      costInHeader.textContent = `${currentCost}`;
+      costInHeader.textContent = `${totalCost}`;
     }
   }
 }
