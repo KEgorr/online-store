@@ -1,0 +1,35 @@
+@import '../../node_modules/normalize.css/normalize.css';
+
+@import '../sass/abstracts/colors';
+
+@import '../sass/base/base';
+
+@import '../sass/layout/wrapper';
+
+@import '../sass/layout/_store-layout';
+
+@import '../sass/layout/filters-layout';
+
+@import '../sass//layout/item-page';
+
+@import '../sass//layout/cart';
+
+@import '../sass/components/header';
+
+@import '../sass/components/filters';
+
+@import '../sass/components/buttons';
+
+@import '../sass/components/footer';
+
+@import '../sass/components/double-range-slider';
+
+@import '../sass/components/error404';
+
+@import '../sass/components/items';
+
+@import '../sass/components/item_page';
+
+@import '../sass/components/cart';
+
+@import '../sass/components/buy-now-pop-up';

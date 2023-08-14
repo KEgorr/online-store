@@ -1,0 +1,35 @@
+.default-button {
+  background-color: #ffffff;
+  border-radius: 10px;
+  border: 1px solid $color_border;
+  font-size: 1em;
+  padding: 0.5rem;
+}
+
+.default-button:hover {
+  cursor: pointer;
+  background-color: $color_border;
+}
+
+.card-buttons {
+  width: 100%;
+  display: flex;
+  row-gap: 0.5rem;
+  flex-direction: column;
+}
+
+.button-arrow {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border: 2px solid $color_border;
+  background-color: $color_background;
+  font-size: 1.2rem;
+  &:hover {
+    cursor: pointer;
+    background-color: $color_border;
+  }
+}

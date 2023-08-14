@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Store Example</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet" />
+  </head>
+  <body class="body">
+    <header class="header">
+      <div class="wrapper">
+        <div class="logo">
+          <div class="logo-img"></div>
+          <h1 class="logo__name">Online Store</h1>
+        </div>
+        <div class="cost">
+          <p class="cost-text cost-text_special">
+            Cart total: <span class="cost-text cost-text_price">0.00</span><span>$</span>
+          </p>
+        </div>
+        <div class="shopping-cart">
+          <span class="shopping-cart__img"></span>
+          <span class="shopping-cart__items">0</span>
+        </div>
+      </div>
+    </header>
+    <main class="main">
+      <div class="wrapper"></div>
+    </main>
+    <footer class="footer">
+      <div class="wrapper">
+        <div class="credits">
+          <p class="credits-text">Designed by:</p>
+          <a class="credits-link" href="https://github.com/KEgorr">KEgorr</a>
+          <a href="https://github.com/SvetlanaVl" class="credits-link">SvetlanaVl</a>
+        </div>
+        <div class="rs-school-img">
+          <a href="https://rs.school/js/"></a>
+        </div>
+      </div>
+    </footer>
+
+    <template id="itemTemp">
+      <div class="item">
+        <p class="item__name"></p>
+        <p class="item__img"><span class="item__discount"></span></p>
+        <ul class="characteristics">
+          <li class="char-name">Stock: <span class="char-value characteristics__stock"></span></li>
+          <li class="char-name">Brand: <span class="char-value characteristics__brand"></span></li>
+          <li class="char-name">Category: <span class="char-value characteristics__category"></span></li>
+          <li class="char-name">Rating: <span class="char-value characteristics__rating"></span></li>
+        </ul>
+        <div class="price">
+          <p class="price__current-price"></p>
+          <span class="price__original-price"></span>
+        </div>
+        <div class="item-buttons">
+          <div class="add-to-cart-button">
+            <button class="default-button button-stock-increase">Add to cart</button>
+          </div>
+          <div class="details-button">
+            <button class="default-button">Details</button>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <template id="filterValueTemp">
+      <label class="filter-label">
+        <input class="checkbox" type="checkbox" name="" value="" />
+        <p class="filter_value"></p>
+      </label>
+    </template>
+
+    <template id="itemPage">
+      <section class="item-page">
+        <div class="item-path">
+          <p class="item-path__text item-path__text_store">STORE</p>
+          <span class="slash">/</span>
+          <p class="item-path__text item-path__text_category"></p>
+          <span class="slash">/</span>
+          <p class="item-path__text item-path__text_brand"></p>
+          <span class="slash">/</span>
+          <p class="item-path__text item-path__text_tittle"></p>
+        </div>
+        <div class="item-info">
+          <p class="item-info__name"></p>
+          <div class="overview">
+            <div class="images">
+              <div class="side-images"></div>
+              <div class="main-image"><span class="item__discount item__discount_info"></span></div>
+            </div>
+            <div class="info-main">
+              <ul class="characteristics characteristics_item-page">
+                <li class="char-name char-name_description">
+                  Description: <span class="char-value characteristics__description"></span>
+                </li>
+                <li class="char-name">Stock: <span class="char-value characteristics__stock"></span></li>
+                <li class="char-name">Brand: <span class="char-value characteristics__brand"></span></li>
+                <li class="char-name">Category: <span class="char-value characteristics__category"></span></li>
+                <li class="char-name">Rating: <span class="char-value characteristics__rating"></span></li>
+              </ul>
+              <div class="price price_item-page">
+                <p class="price__current-price"></p>
+                <span class="price__original-price"></span>
+              </div>
+              <div class="item-buttons item-buttons_items-page">
+                <div class="add-to-cart-button">
+                  <button class="default-button button-stock-increase">Add to cart</button>
+                </div>
+                <div class="by-now-button">
+                  <button class="default-button">Buy now</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </template>
+
+    <template id="mainPage">
+      <section class="filters-section">
+        <p class="items-found"></p>
+        <div class="filter-block other-filters">
+          <div class="search-filter">
+            <h2 class="filters-name">Search</h2>
+            <input class="search" placeholder="Type the text" type="text" autocomplete="off" />
+          </div>
+          <div class="sort-filters">
+            <h2 class="filters-name">Sorting</h2>
+            <div class="custom-select">
+              <label>
+                <div class="sort-value">
+                  <p class="sort-name">Sort options:</p>
+                  <span class="vertical-line"></span>
+                  <span class="sort-checkmark"></span>
+                  <input type="checkbox" class="custom-select__checkbox" />
+                </div>
+              </label>
+              <div class="sort-options sort-options_hidden">
+                <label class="sort-options__option">
+                  <input class="radio-sort" type="radio" value="price-asc" name="sort" />
+                  <p class="sort-options__name" value="price-asc">Sort by Price ASC</p>
+                </label>
+                <label class="sort-options__option">
+                  <input class="radio-sort" type="radio" value="price-desc" name="sort" />
+                  <p class="sort-options__name" value="price-desc">Sort by Price DESC</p>
+                </label>
+                <label class="sort-options__option">
+                  <input class="radio-sort" type="radio" value="rating-asc" name="sort" />
+                  <p class="sort-options__name" value="rating-asc">Sort by Rating ASC</p>
+                </label>
+                <label class="sort-options__option">
+                  <input class="radio-sort" type="radio" value="rating-desc" name="sort" />
+                  <p class="sort-options__name" value="rating-desc">Sort by Rating DESC</p>
+                </label>
+                <label class="sort-options__option">
+                  <input class="radio-sort" type="radio" value="discountPercentage-asc" name="sort" />
+                  <p class="sort-options__name" value="discountPercentage-asc">Sort by Discount ASC</p>
+                </label>
+                <label class="sort-options__option">
+                  <input class="radio-sort" type="radio" value="discountPercentage-desc" name="sort" />
+                  <p class="sort-options__name" value="discountPercentage-desc">Sort by Discount DESC</p>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="filter-block value-filters">
+          <h2 class="filters-name">Filters by value</h2>
+          <div class="filter brand-filter">
+            <p class="filter-category">Brand</p>
+            <div class="filter-values-block brand"></div>
+          </div>
+          <div class="filter category-filter">
+            <p class="filter-category">Category</p>
+            <div class="filter-values-block category"></div>
+          </div>
+        </div>
+        <div class="filter-block range-filters">
+          <h2 class="filters-name">Filters by range</h2>
+          <div class="diapason-filter">
+            <p class="filter-category">Stock</p>
+            <div class="filter-by-range">
+              <div class="double-range-values">
+                <span class="range-value" id="stock-value1"> # </span>
+                <span>-</span>
+                <span class="range-value" id="stock-value2"> # </span>
+              </div>
+              <div class="double-range-filter">
+                <div class="slider-track" id="slider-track-stock"></div>
+                <input type="range" min="" max="" value="" id="slider-stock1" />
+                <input type="range" min="" max="" value="" id="slider-stock2" />
+              </div>
+            </div>
+          </div>
+          <div class="diapason-filter">
+            <p class="filter-category">Price, $</p>
+            <div class="filter-by-range">
+              <div class="double-range-values">
+                <span class="range-value" id="price-value1"> # </span>
+                <span>-</span>
+                <span class="range-value" id="price-value2"> # </span>
+              </div>
+              <div class="double-range-filter">
+                <div class="slider-track" id="slider-track-price"></div>
+                <input type="range" min="" max="" value="" id="slider-price1" />
+                <input type="range" min="" max="" value="" id="slider-price2" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="filter-block reset-copy">
+          <div class="reset-button">
+            <button class="default-button">Reset filters</button>
+          </div>
+          <div class="copy-button">
+            <button class="default-button">Copy link</button>
+          </div>
+        </div>
+      </section>
+      <section class="items-section"></section>
+    </template>
+
+    <template id="cartPage">
+      <section class="cartSection">
+        <div class="products-in-cart">
+          <div class="products-in-cart-tittle">
+            <p class="tittle-name">Products in Cart</p>
+            <div class="tittle-settings">
+              <div class="limit">
+                <span class="limit__tittle">LIMIT:</span>
+                <input type="number" min="1" value="3" class="limit__number" />
+              </div>
+              <div class="pages">
+                <div class="pages-button-left">
+                  <button class="button-arrow">&lt;</button>
+                </div>
+                <p class="pages__number">1</p>
+                <div class="pages-button-right">
+                  <button class="button-arrow">&gt;</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="products"></div>
+        </div>
+        <div class="summary">
+          <p class="summary__tittle">Summary</p>
+          <ul class="summary-info">
+            <li class="summary-info-text">Products: <span class="char-value info-number__products"></span></li>
+            <li class="summary-info-text">
+              Total: <span class="char-value info-number__total"></span>
+              <span class="price__current-price text-hidden"></span>
+            </li>
+            <li class="promo">
+              <input type="search" placeholder="Enter promo code" class="search" />
+              <p class="promo__promo-code">Promo for test: 'RS', 'EPM'</p>
+              <div class="promo-applied-block">
+                <p class="promo__promo-code text-hidden" id="RS-promo">
+                  promo code RS applied (-10%) <span class="cancel-ico" id="RS-cancel"></span>
+                </p>
+                <p class="promo__promo-code text-hidden" id="EPM-promo">
+                  promo code EPM applied (-5%) <span class="cancel-ico" id="EPM-cancel"></span>
+                </p>
+                <p class="promo__promo-code-failed" id="invalid-promo">wrong promo code</p>
+              </div>
+            </li>
+          </ul>
+          <div class="by-now-button">
+            <button class="default-button">Buy now</button>
+          </div>
+        </div>
+      </section>
+    </template>
+
+    <template id="buyNowPopUp">
+      <div class="buy-now-pop-up-block">
+        <div class="buy-now-block">
+          <p class="pop-up-tittle">An order for <span class="order-amount"></span></p>
+          <div class="pop-up-inputs">
+            <div class="personality-block pop-up-input-bock">
+              <div class="personality-name-block pop-up-input">
+                <p class="pop-up-text">Name:</p>
+                <input type="text" class="search data-popUp-input" id="name" placeholder="Enter your name" />
+              </div>
+              <div class="personality-surname-block pop-up-input">
+                <p class="pop-up-text">Surname:</p>
+                <input type="text" class="search data-popUp-input" id="surname" placeholder="Enter your surname" />
+              </div>
+            </div>
+            <div class="address-block pop-up-input-bock">
+              <div class="address-country-block pop-up-input">
+                <p class="pop-up-text">Country:</p>
+                <input type="text" class="search data-popUp-input" id="country" placeholder="Enter your country" />
+              </div>
+              <div class="address-city-block pop-up-input">
+                <p class="pop-up-text">City:</p>
+                <input type="text" class="search data-popUp-input" id="city" placeholder="Enter your city" />
+              </div>
+              <div class="address-state-block pop-up-input">
+                <p class="pop-up-text">State:</p>
+                <input type="text" class="search data-popUp-input" id="state" placeholder="Enter your state" />
+              </div>
+              <div class="address-address-block pop-up-input">
+                <p class="pop-up-text">Address:</p>
+                <input
+                  type="text"
+                  class="search data-popUp-input"
+                  id="address"
+                  placeholder="Street, house, apartment"
+                />
+              </div>
+              <div class="address-post-block pop-up-input">
+                <p class="pop-up-text">Postal code:</p>
+                <input type="text" class="search data-popUp-input" id="post" placeholder="Enter your postal code" />
+              </div>
+            </div>
+            <p class="invalid-input-text data-text">Some text</p>
+            <div class="card">
+              <input type="tel" class="search card-number" placeholder="Card number" />
+              <input type="text" class="search card-valid-thru" placeholder="MM/YY" />
+              <input type="text" class="search card-cvv" placeholder="CVV" />
+              <div class="card-logo"><p class="other-payment-method-text">OTHER PAY</p></div>
+            </div>
+            <p class="invalid-input-text card-text">Invalid card</p>
+          </div>
+          <div class="confirm-order-button-block">
+            <button class="confirm-order-button default-button">Confirm order</button>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <template id="productsInCart">
+      <div class="product">
+        <p class="product__number"></p>
+        <div class="product-info">
+          <div class="product__img"></div>
+          <div class="product-info-text">
+            <p class="product-info__tittle"></p>
+            <p class="product-info__description"></p>
+            <div class="product-other">
+              <p class="product-other__rating">Rating: <span class="rating-value char-value"></span></p>
+              <p class="product-other__discount">Discount: <span class="discount-value char-value"></span></p>
+            </div>
+          </div>
+        </div>
+        <div class="product-number-control">
+          <p class="product-number-text">Stock: <span class="stock-value char-value"></span></p>
+          <div class="stock-changing">
+            <div class="button-stock-increase">
+              <button class="button-arrow">+</button>
+            </div>
+            <p class="current-product-number"></p>
+            <div class="button-stock-reduce">
+              <button class="button-arrow">-</button>
+            </div>
+          </div>
+          <p class="product-number-text"><span class="price-value char-value"></span></p>
+        </div>
+      </div>
+    </template>
+  </body>
+</html>

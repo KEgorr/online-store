@@ -1,0 +1,97 @@
+.item-page {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.item-path {
+  display: flex;
+  column-gap: 1em;
+  margin-bottom: 0.5rem;
+}
+
+.item-info {
+  width: 100%;
+}
+
+.item-info__name {
+  margin-bottom: 0.5em;
+}
+
+.overview {
+  display: flex;
+  align-items: center;
+  column-gap: 2em;
+}
+
+.images {
+  display: flex;
+  column-gap: 1em;
+  align-items: center;
+}
+
+.main-image {
+  width: 400px;
+  height: 400px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
+}
+
+.side-images {
+  width: 100px;
+  overflow-y: auto;
+  height: 500px;
+  row-gap: 1em;
+  display: flex;
+  flex-direction: column;
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 0;
+    background-color: #fff;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: $color_border;
+    border-radius: 9em;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: darken($color: $color_border, $amount: 10);
+  }
+}
+
+.side-images__img {
+  width: 100%;
+  height: 100px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
+}
+
+.item__discount_info {
+  top: 10px !important;
+  left: 340px !important;
+}
+
+.info-main {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1em;
+  flex-grow: 1;
+}
+
+.char-name_description {
+  white-space: inherit !important;
+  line-height: 1.5em;
+}
+
+.price_item-page {
+  justify-content: flex-start !important;
+}
+
+.item-buttons_items-page {
+  justify-content: flex-start !important;
+  column-gap: 1em;
+}

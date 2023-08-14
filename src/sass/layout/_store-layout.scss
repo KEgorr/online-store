@@ -1,0 +1,25 @@
+.main {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  .wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border: 1px solid $color_border;
+    border-radius: 10px;
+    padding: 10px;
+  }
+}
+
+.filters-section {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  min-width: 25%;
+}
+
+.items-section {
+  display: flex;
+  flex-wrap: wrap;
+  min-width: 75%;
+}
