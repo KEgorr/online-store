@@ -1,0 +1,170 @@
+.buy-now-pop-up-block {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(1.5rem);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.buy-now-block {
+  position: fixed;
+  width: 800px;
+  height: 680px;
+  background-color: #153f65;
+  box-sizing: border-box;
+  padding: 1rem;
+  border-radius: 1rem;
+}
+
+.pop-up-tittle {
+  color: $color_background;
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.pop-up-text {
+  color: $color_background;
+  font-size: 1.3rem;
+}
+
+.pop-up-inputs {
+  display: flex;
+  align-items: center;
+  row-gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  column-gap: 2rem;
+}
+
+.pop-up-input {
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
+  justify-content: space-between;
+}
+
+.pop-up-input-bock {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  width: 350px;
+}
+
+.card {
+  background-image: url('./../images/debitcard-template.png');
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 450px;
+  height: 250px;
+  position: relative;
+
+  .card-number {
+    position: absolute;
+    top: 125px;
+    font-size: 1.2rem;
+    left: 55px;
+    width: 320px;
+    text-align: center;
+  }
+
+  .card-valid-thru {
+    position: absolute;
+    top: 187px;
+    left: 100px;
+    font-size: 1.2rem;
+    width: 70px;
+  }
+
+  .card-cvv {
+    position: absolute;
+    top: 187px;
+    left: 270px;
+    font-size: 1.2rem;
+    width: 40px;
+  }
+
+  .card-logo {
+    position: absolute;
+    top: 170px;
+    left: 340px;
+    width: 70px;
+    height: 70px;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+  }
+
+  .other-payment-method-text {
+    color: $color_background;
+    font-weight: bold;
+    text-align: center;
+    display: none;
+  }
+}
+
+.confirm-order-button-block {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.invalid-input-text {
+  text-align: center;
+  width: 100%;
+  font-size: 1rem;
+  color: lighten($color: $color_discount, $amount: 15);
+  opacity: 0;
+}
+
+.showed-pop-up-text {
+  opacity: 1;
+}
+
+.invalid-input {
+  border-color: $color_cur_price;
+}
+
+.order-success-block {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.order-success-text {
+  width: 70%;
+  height: 20%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $color_header;
+  border-radius: 1rem;
+  border: 0.5rem solid $color_border;
+  opacity: 0.9;
+  animation-name: showSuccess;
+  animation-duration: 5s;
+}
+
+@keyframes showSuccess {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0.9;
+  }
+
+  100% {
+    opacity: 0.9;
+  }
+}

@@ -275,6 +275,64 @@
       </section>
     </template>
 
+    <template id="buyNowPopUp">
+      <div class="buy-now-pop-up-block">
+        <div class="buy-now-block">
+          <p class="pop-up-tittle">An order for <span class="order-amount"></span></p>
+          <div class="pop-up-inputs">
+            <div class="personality-block pop-up-input-bock">
+              <div class="personality-name-block pop-up-input">
+                <p class="pop-up-text">Name:</p>
+                <input type="text" class="search data-popUp-input" id="name" placeholder="Enter your name" />
+              </div>
+              <div class="personality-surname-block pop-up-input">
+                <p class="pop-up-text">Surname:</p>
+                <input type="text" class="search data-popUp-input" id="surname" placeholder="Enter your surname" />
+              </div>
+            </div>
+            <div class="address-block pop-up-input-bock">
+              <div class="address-country-block pop-up-input">
+                <p class="pop-up-text">Country:</p>
+                <input type="text" class="search data-popUp-input" id="country" placeholder="Enter your country" />
+              </div>
+              <div class="address-city-block pop-up-input">
+                <p class="pop-up-text">City:</p>
+                <input type="text" class="search data-popUp-input" id="city" placeholder="Enter your city" />
+              </div>
+              <div class="address-state-block pop-up-input">
+                <p class="pop-up-text">State:</p>
+                <input type="text" class="search data-popUp-input" id="state" placeholder="Enter your state" />
+              </div>
+              <div class="address-address-block pop-up-input">
+                <p class="pop-up-text">Address:</p>
+                <input
+                  type="text"
+                  class="search data-popUp-input"
+                  id="address"
+                  placeholder="Street, house, apartment"
+                />
+              </div>
+              <div class="address-post-block pop-up-input">
+                <p class="pop-up-text">Postal code:</p>
+                <input type="text" class="search data-popUp-input" id="post" placeholder="Enter your postal code" />
+              </div>
+            </div>
+            <p class="invalid-input-text data-text">Some text</p>
+            <div class="card">
+              <input type="tel" class="search card-number" placeholder="Card number" />
+              <input type="text" class="search card-valid-thru" placeholder="MM/YY" />
+              <input type="text" class="search card-cvv" placeholder="CVV" />
+              <div class="card-logo"><p class="other-payment-method-text">OTHER PAY</p></div>
+            </div>
+            <p class="invalid-input-text card-text">Invalid card</p>
+          </div>
+          <div class="confirm-order-button-block">
+            <button class="confirm-order-button default-button">Confirm order</button>
+          </div>
+        </div>
+      </div>
+    </template>
+
     <template id="productsInCart">
       <div class="product">
         <p class="product__number"></p>

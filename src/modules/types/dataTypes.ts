@@ -35,3 +35,23 @@ export interface IPromos {
   EPM: boolean;
   invalidPromo: boolean;
 }
+
+interface IObject {
+  [key: string]: string;
+}
+
+export interface IOrderData extends IObject {
+  name: string;
+  surname: string;
+  country: string;
+  city: string;
+  state: string;
+  address: string;
+  post: string;
+}
+
+export interface ICardData {
+  cardNumber: string;
+  cardDate: string;
+  cardCvv: string;
+}
