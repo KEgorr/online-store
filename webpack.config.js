@@ -33,7 +33,10 @@ const baseConfig = {
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        type: 'asset/resource',
+        loader: 'file-loader',
+        options: {
+          name: '[path][name].[ext]',
+        },
       },
     ],
   },
@@ -44,7 +47,7 @@ const baseConfig = {
     filename: 'index.js',
     path: path.resolve(__dirname, 'dist'),
     assetModuleFilename: 'assets/images/[name].[ext]',
-    publicPath: '/'
+    publicPath: '/',
   },
   plugins: [
     new HtmlWebpackPlugin({

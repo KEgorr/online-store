@@ -1,7 +1,10 @@
 import { app } from '../..';
 import { ICardData, IOrderData, IStorageData } from '../types/dataTypes';
 import { getTotalCost } from './utils/costUtils';
-
+import americanExpressLogo from '../../images/american-express-logo.png';
+import masterCardLogo from '../../images/master-card-logo.png';
+import visaLogo from '../../images/visa-logo.png';
+import unionLogo from '../../images/union-logo.png';
 export default class ByNowPopUp {
   private data: IOrderData;
 
@@ -115,10 +118,38 @@ export default class ByNowPopUp {
         if (formattedArr) {
           cardNumber = formattedArr.join(' ');
           target.value = cardNumber;
+          this.changeCardLogo();
         }
       } else {
         target.value = '';
       }
+    }
+  }
+
+  private changeCardLogo() {
+    const cardLogo: HTMLDivElement | null = document.querySelector('.card-logo');
+    const other: HTMLParagraphElement | null = document.querySelector('.other-payment-method-text');
+    if (!cardLogo || !other) return;
+    const firstNumber = this.card.cardNumber.at(0);
+
+    other.style.display = 'none';
+    switch (firstNumber) {
+      case '1':
+        console.log(americanExpressLogo);
+        cardLogo.style.backgroundImage = `url('${americanExpressLogo}')`;
+        break;
+      case '2':
+        cardLogo.style.backgroundImage = `url('${masterCardLogo}')`;
+        break;
+      case '3':
+        cardLogo.style.backgroundImage = `url('${visaLogo}')`;
+        break;
+      case '4':
+        cardLogo.style.backgroundImage = `url('${unionLogo}')`;
+        break;
+      default:
+        other.style.display = 'block';
+        cardLogo.style.backgroundImage = '';
     }
   }
 
